@@ -41,7 +41,7 @@ export default class SiteManager {
     // Fetching Three.js Elements
     this.camera = new Camera();
     this.renderer = new Renderer();
-    this.loadingMgr = new LoadingMgr();
+    // this.loadingMgr = new LoadingMgr();
     this.universe = new Universe();
 
     // Calling Methods
