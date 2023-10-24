@@ -1,11 +1,11 @@
-import SiteManager from '../SiteManager';
+import App from '../App';
 
-export default class LoadingMgr {
+export default class Resources {
   constructor() {
-    this.siteManager = new SiteManager();
-    this.scene = this.siteManager.scene;
-    this.interval = this.siteManager.interval;
-    this.sizes = this.siteManager.sizes;
+    this.app = new App();
+    this.scene = this.app.scene;
+    this.interval = this.app.interval;
+    this.sizes = this.app.sizes;
 
     this.loadingSVGContainer = document.querySelector('#circles-con');
 

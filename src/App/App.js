@@ -9,14 +9,14 @@ import Interval from './Utils/Interval';
 // Three.js Configurations
 import Camera from './Config/Camera';
 import Renderer from './Config/Renderer';
-import LoadingMgr from './Config/LoadingMgr';
+import Resources from './Utils/Resources';
 
 // Three.js Visual Assets
-import Universe from './Universe/Universe';
+import World from './World/World';
 
 let instance = null; // this is the variable used inside the SiteManager class
 
-export default class SiteManager {
+export default class App {
   constructor(canvas) {
     // Global variables
     // window.siteManager = this; // indeed not in need
@@ -42,7 +42,7 @@ export default class SiteManager {
     this.camera = new Camera();
     this.renderer = new Renderer();
     // this.loadingMgr = new LoadingMgr();
-    this.universe = new Universe();
+    this.world = new World();
 
     // Calling Methods
     window.addEventListener('dblclick', () => {
@@ -65,7 +65,7 @@ export default class SiteManager {
     this.camera.resize();
     this.renderer.resize(); // This line is a must
     this.loadingMgr.resize();
-    this.universe.resize();
+    this.world.resize();
   }
 
   // Called every frame (60fps)
@@ -74,13 +74,13 @@ export default class SiteManager {
       this.tests.stats.begin();
       this.interval.update();
       this.camera.update();
-      this.universe.update();
+      this.world.update();
       this.renderer.update(); // Not in need if passes are being used.
       this.tests.stats.end();
     } else {
       this.interval.update();
       this.camera.update();
-      this.universe.update();
+      this.world.update();
       this.renderer.update(); // Not in need if passes are being used.
     }
 

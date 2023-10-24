@@ -1,9 +1,9 @@
-import SiteManager from '../SiteManager';
+import App from '../App';
 
 export default class Sizes {
   constructor() {
-    this.siteManager = new SiteManager();
-    this.canvas = this.siteManager.canvas;
+    this.app = new App();
+    this.canvas = this.app.canvas;
 
     this.setSizes();
     this.getCursorLocation();

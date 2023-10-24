@@ -15,9 +15,9 @@
  * ------------------------------------------------
  *
  */
-import './style.css';
+import './index.css';
 
-import SiteManager from './App/SiteManager';
+import App from './App/App';
 
 const canvas = document.getElementById('webgl');
-const siteManager = new SiteManager(canvas);
+const app = new App(canvas);

@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-import SiteManager from '../SiteManager';
+import App from '../App';
 
-export default class Walls {
+export default class Home {
   constructor() {
-    this.siteManager = new SiteManager();
-    this.scene = this.siteManager.scene;
+    this.app = new App();
+    this.scene = this.app.scene;
 
     this.setInstance();
   }

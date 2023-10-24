@@ -1,14 +1,14 @@
 import * as THREE from 'three';
-import SiteManager from '../SiteManager';
+import App from '../App';
 
 export default class Renderer {
   constructor() {
-    this.siteManager = new SiteManager();
-    this.sizes = this.siteManager.sizes;
-    this.camera = this.siteManager.camera;
-    this.canvas = this.siteManager.canvas;
-    this.scene = this.siteManager.scene;
-    this.tests = this.siteManager.tests;
+    this.app = new App();
+    this.sizes = this.app.sizes;
+    this.camera = this.app.camera;
+    this.canvas = this.app.canvas;
+    this.scene = this.app.scene;
+    this.tests = this.app.tests;
 
     this.clearColor = "#ff0000";
 
