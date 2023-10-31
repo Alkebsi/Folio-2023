@@ -64,7 +64,7 @@ export default class App {
     this.sizes.resize();
     this.camera.resize();
     this.renderer.resize(); // This line is a must
-    this.loadingMgr.resize();
+    // this.loadingMgr.resize();
     this.world.resize();
   }
 

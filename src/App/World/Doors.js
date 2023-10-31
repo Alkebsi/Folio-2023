@@ -6,17 +6,17 @@ export default class Doors {
     this.app = new App();
     this.scene = this.app.scene;
 
-    this.setInstance();
+    this.setEnteranceDoor();
   }
 
-  setInstance() {
-    this.instance = new THREE.Mesh(
-      new THREE.BoxGeometry(0.5, 1, 1),
+  setEnteranceDoor() {
+    this.enteranceDoor = new THREE.Mesh(
+      new THREE.BoxGeometry(0.5, 1, 0.1),
       new THREE.MeshBasicMaterial({ color: 0xffffff })
     );
 
-    this.instance.position.set(0, 0.5, 0.1);
+    this.enteranceDoor.position.set(0, 0.5, 0.5);
 
-    this.scene.add(this.instance);
+    this.scene.add(this.enteranceDoor);
   }
 }

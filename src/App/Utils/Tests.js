@@ -14,7 +14,7 @@ export default class Tests {
       this.gui = new GUI();
       this.stats = new Stats();
 
-      this.world = this.gui.addFolder('world');
+      this.world = this.gui.addFolder('World');
 
       this.setStats();
     }

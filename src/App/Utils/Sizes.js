@@ -6,6 +6,7 @@ export default class Sizes {
     this.canvas = this.app.canvas;
 
     this.setSizes();
+    this.setDoorsCount();
     this.getCursorLocation();
     this.getMobileOrentation();
   }
@@ -26,6 +27,10 @@ export default class Sizes {
     }
   }
 
+  setDoorsCount() {
+    this.doorsCount = 1;
+  }
+  
   getCursorLocation() {
     this.mouseLocation = {
       x: 0,
