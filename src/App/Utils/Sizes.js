@@ -4,11 +4,16 @@ export default class Sizes {
   constructor() {
     this.app = new App();
     this.canvas = this.app.canvas;
+    this.tests = this.app.tests;
 
     this.setSizes();
     this.setDoorsCount();
     this.getCursorLocation();
     this.getMobileOrentation();
+
+    if (this.tests.active) {
+      this.setTests();
+    }
   }
 
   setSizes() {
@@ -28,16 +33,16 @@ export default class Sizes {
   }
 
   setDoorsCount() {
-    this.doorsCount = 1;
+    this.doorsCount = 11;
   }
-  
+
   getCursorLocation() {
     this.mouseLocation = {
       x: 0,
       y: 0,
     };
 
-    window.addEventListener('mousemove', event => {
+    window.addEventListener('mousemove', (event) => {
       this.mouseLocation.x = (event.clientX / this.width) * 2 - 1;
       this.mouseLocation.y = (-event.clientY / this.height) * 2 + 1;
     });
@@ -51,11 +56,13 @@ export default class Sizes {
       y: 0,
     };
 
-    window.addEventListener('deviceorientation', event => {
+    window.addEventListener('deviceorientation', (event) => {
       this.gyro.x = (-event.gamma / 90) * 4;
       this.gyro.y = (event.beta / 90) * 2;
       // The alpha (gyro.z) is not usable
       // this.gyro.z = event.alpha;
     });
   }
+
+  setTests() {}
 }

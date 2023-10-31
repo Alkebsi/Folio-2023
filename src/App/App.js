@@ -19,7 +19,7 @@ let instance = null; // this is the variable used inside the SiteManager class
 export default class App {
   constructor(canvas) {
     // Global variables
-    // window.siteManager = this; // indeed not in need
+    // window.app = this; // indeed not in need
 
     // Checking if it was called once before
     if (instance) {
