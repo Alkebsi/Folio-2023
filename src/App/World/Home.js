@@ -9,8 +9,8 @@ export default class Home {
     this.tests = this.app.tests;
 
     this.universalParams = {
-      opacity: 1,
-      transparent: false,
+      opacity: 0.2,
+      transparent: true,
     };
 
     if (this.sizes.doorsCount % 2 === 1) {
@@ -76,23 +76,25 @@ export default class Home {
     // Setting the ground to transparent
     this.ground.material.transparent = true;
 
+    const updateOpacity = () => {
+      this.instance.material.opacity = this.universalParams.opacity;
+      this.ground.material.opacity = this.universalParams.opacity;
+      this.innerHall.material.opacity = this.universalParams.opacity;
+      this.instance.material.transparent = this.universalParams.transparent;
+      this.innerHall.material.transparent = this.universalParams.transparent;
+      // This didn't work for some reaseon! So, the ground's transparent is true once tests are open
+      // this.ground.material.transparent = this.universalParams.transparent;
+    };
+    updateOpacity();
+
     this.tests.objectsOpacity
       .add(this.universalParams, 'opacity', 0, 1, 0.01)
       .name('Opacity')
-      .onFinishChange(() => {
-        this.instance.material.opacity = this.universalParams.opacity;
-        this.ground.material.opacity = this.universalParams.opacity;
-        this.innerHall.material.opacity = this.universalParams.opacity;
-      });
+      .onFinishChange(updateOpacity);
 
     this.tests.objectsOpacity
       .add(this.universalParams, 'transparent')
       .name('Transparency')
-      .onFinishChange(() => {
-        this.instance.material.transparent = this.universalParams.transparent;
-        this.innerHall.material.transparent = this.universalParams.transparent;
-        // This didn't work for some reaseon! So, the ground's transparent is true once tests are open
-        // this.ground.material.transparent = this.universalParams.transparent;
-      });
+      .onFinishChange(updateOpacity);
   }
 }

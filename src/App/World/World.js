@@ -3,6 +3,7 @@ import App from '../App';
 import Models from './Models';
 import Home from './Home';
 import Doors from './Doors';
+import Rooms from './Rooms';
 
 export default class World {
   constructor() {
@@ -12,7 +13,7 @@ export default class World {
 
     this.walls = new Home();
     this.doors = new Doors();
-    // this.models = new Models();
+    this.rooms = new Rooms();
   }
 
   resize() {}

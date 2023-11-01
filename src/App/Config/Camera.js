@@ -25,6 +25,18 @@ export default class camera {
       0.01,
       10000
     );
+
+    // Added a testing orthographic camera to my scene with
+    // wrong vlaues, yet did the work!
+    // this.instance = new THREE.OrthographicCamera(
+    //   -400,
+    //   400,
+    //   400,
+    //   -400,
+    //   1,
+    //   1000
+    // );
+
     this.instance.position.set(10, 5, 10);
     this.instanceGroup.add(this.instance);
     this.scene.add(this.instanceGroup);

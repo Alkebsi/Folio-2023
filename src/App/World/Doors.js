@@ -32,7 +32,7 @@ export default class Doors {
       this.oddDoors = true;
     }
 
-    this.roomDoorSide = true; // true = right, false = left
+    this.roomDoorSide = true; // true = right / false = left
 
     if (!this.oddDoors) {
       for (let i = 0; i < this.sizes.doorsCount; i++) {
@@ -50,8 +50,8 @@ export default class Doors {
           this.roomDoorSide = true;
         }
         this.doorsGroup.add(roomDoors);
-        this.scene.add(this.doorsGroup);
       }
+      this.scene.add(this.doorsGroup);
     } else {
       for (let i = 0; i < this.sizes.doorsCount * 2; i++) {
         const roomDoors = new THREE.Mesh(
