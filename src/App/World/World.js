@@ -11,7 +11,7 @@ export default class World {
     this.tests = this.app.tests;
 
     this.walls = new Home();
-    this.door = new Doors();
+    this.doors = new Doors();
     // this.models = new Models();
   }
 

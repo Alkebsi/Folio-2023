@@ -23,7 +23,7 @@ export default class camera {
       45,
       this.sizes.width / this.sizes.height,
       0.01,
-      100
+      10000
     );
     this.instance.position.set(10, 5, 10);
     this.instanceGroup.add(this.instance);

@@ -13,8 +13,12 @@ export default class Home {
       transparent: false,
     };
 
-    // this.doorsSize
-    
+    if (this.sizes.doorsCount % 2 === 1) {
+      this.buildingDepth = this.sizes.doorsCount;
+    } else {
+      this.buildingDepth = this.sizes.doorsCount * 0.5;
+    }
+
     this.setInstance();
     this.setGround();
     this.setInnerHall();
@@ -26,14 +30,14 @@ export default class Home {
 
   setInstance() {
     this.instance = new THREE.Mesh(
-      new THREE.BoxGeometry(20, 20, this.sizes.doorsCount * 0.5),
+      new THREE.BoxGeometry(20, 20, this.buildingDepth),
       new THREE.MeshBasicMaterial({
         color: 0x000000,
         side: THREE.DoubleSide,
       })
     );
 
-    this.instance.position.set(0, 10, -this.sizes.doorsCount * 0.25);
+    this.instance.position.set(0, 10, -this.buildingDepth * 0.5);
 
     this.scene.add(this.instance);
   }
@@ -45,7 +49,7 @@ export default class Home {
         color: 0x000000,
       })
     );
-    
+
     this.ground.position.set(0, -0.01, 0); // to avoid z-conflect!
     this.ground.rotation.x = -Math.PI * 0.5;
 
@@ -54,14 +58,14 @@ export default class Home {
 
   setInnerHall() {
     this.innerHall = new THREE.Mesh(
-      new THREE.BoxGeometry(2, 1.5, this.sizes.doorsCount * 0.5 - 0.01),
+      new THREE.BoxGeometry(2, 1.5, this.buildingDepth - 0.01),
       new THREE.MeshBasicMaterial({
         color: 0xffffff,
         side: THREE.DoubleSide,
       })
     );
 
-    this.innerHall.position.set(0, 0.753, -this.sizes.doorsCount * 0.25);
+    this.innerHall.position.set(0, 0.753, -this.buildingDepth * 0.5);
 
     this.scene.add(this.innerHall);
   }
@@ -71,7 +75,7 @@ export default class Home {
 
     // Setting the ground to transparent
     this.ground.material.transparent = true;
-    
+
     this.tests.objectsOpacity
       .add(this.universalParams, 'opacity', 0, 1, 0.01)
       .name('Opacity')
@@ -87,7 +91,7 @@ export default class Home {
       .onFinishChange(() => {
         this.instance.material.transparent = this.universalParams.transparent;
         this.innerHall.material.transparent = this.universalParams.transparent;
-        // This didn't work for some reaseon! The ground's transparent is true once tests are open 
+        // This didn't work for some reaseon! So, the ground's transparent is true once tests are open
         // this.ground.material.transparent = this.universalParams.transparent;
       });
   }

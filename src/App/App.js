@@ -18,9 +18,6 @@ let instance = null; // this is the variable used inside the SiteManager class
 
 export default class App {
   constructor(canvas) {
-    // Global variables
-    // window.app = this; // indeed not in need
-
     // Checking if it was called once before
     if (instance) {
       return instance;
@@ -54,6 +51,10 @@ export default class App {
     requestAnimationFrame(() => {
       this.update();
     });
+
+    if (this.tests.active) {
+      window.app = this; // needed for testing only
+    }
 
     // Finall Log
     console.log('Site is ready');

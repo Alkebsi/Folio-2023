@@ -4,16 +4,11 @@ export default class Sizes {
   constructor() {
     this.app = new App();
     this.canvas = this.app.canvas;
-    this.tests = this.app.tests;
 
     this.setSizes();
     this.setDoorsCount();
     this.getCursorLocation();
     this.getMobileOrentation();
-
-    if (this.tests.active) {
-      this.setTests();
-    }
   }
 
   setSizes() {
@@ -63,6 +58,4 @@ export default class Sizes {
       // this.gyro.z = event.alpha;
     });
   }
-
-  setTests() {}
 }

@@ -34,24 +34,42 @@ export default class Doors {
 
     this.roomDoorSide = true; // true = right, false = left
 
-    for (let i = 0; i < this.sizes.doorsCount; i++) {
-      const roomDoors = new THREE.Mesh(
-        this.roomDoorsGeometry,
-        new THREE.MeshBasicMaterial() // change this with the material instance
-      );
+    if (!this.oddDoors) {
+      for (let i = 0; i < this.sizes.doorsCount; i++) {
+        const roomDoors = new THREE.Mesh(
+          this.roomDoorsGeometry,
+          this.roomDoorsMaterial
+        );
 
-      // Making the doors face each other
-      if (this.roomDoorSide) {
-        roomDoors.position.set(1, 0.75, -i * 0.5 - 0.5);
-        roomDoors.material.color.set(0x0000ff);
-        this.roomDoorSide = false;
-      } else {
-        roomDoors.position.set(-1, 0.75, -i * 0.5);
-        roomDoors.material.color.set(0x00ff00);
-        this.roomDoorSide = true;
+        // Making the doors face each other
+        if (this.roomDoorSide) {
+          roomDoors.position.set(1, 0.75, -i * 0.5 - 0.5);
+          this.roomDoorSide = false;
+        } else {
+          roomDoors.position.set(-1, 0.75, -i * 0.5);
+          this.roomDoorSide = true;
+        }
+        this.doorsGroup.add(roomDoors);
+        this.scene.add(this.doorsGroup);
       }
-      this.doorsGroup.add(roomDoors);
-      this.scene.add(this.doorsGroup);
+    } else {
+      for (let i = 0; i < this.sizes.doorsCount * 2; i++) {
+        const roomDoors = new THREE.Mesh(
+          this.roomDoorsGeometry,
+          this.roomDoorsMaterial
+        );
+
+        // Making the doors face each other
+        if (this.roomDoorSide) {
+          roomDoors.position.set(1, 0.75, -i * 0.5 - 0.5);
+          this.roomDoorSide = false;
+        } else {
+          roomDoors.position.set(-1, 0.75, -i * 0.5);
+          this.roomDoorSide = true;
+        }
+        this.doorsGroup.add(roomDoors);
+        this.scene.add(this.doorsGroup);
+      }
     }
   }
 }
