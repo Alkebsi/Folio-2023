@@ -3,7 +3,7 @@ import Stats from 'stats-js';
 
 export default class Tests {
   constructor(statsType) {
-    this.active = true // window.location.hash === '#tests';
+    this.active = window.location.hash === '#tests';
 
     this.isMobile = this.isMobile();
 

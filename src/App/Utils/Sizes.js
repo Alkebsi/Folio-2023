@@ -29,6 +29,14 @@ export default class Sizes {
 
   setDoorsCount() {
     this.doorsCount = 11;
+
+    if (this.doorsCount % 2 === 1) {
+      this.oddDoors = true;
+    } else if (this.doorsCount % 2 === 0) {
+      this.oddDoors = false;
+    } else {
+      console.error(`The doors count is not set appropriately: ${this.doorsCount}`)
+    }
   }
 
   getCursorLocation() {

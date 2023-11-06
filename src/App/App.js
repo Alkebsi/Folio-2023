@@ -13,11 +13,12 @@ import Resources from './Utils/Resources';
 
 // Three.js Visual Assets
 import World from './World/World';
+import Controllers from './Config/Controllers';
 
 let instance = null; // this is the variable used inside the SiteManager class
 
 export default class App {
-  constructor(canvas) {
+  constructor(canvas, scrollElement) {
     // Checking if it was called once before
     if (instance) {
       return instance;
@@ -38,8 +39,8 @@ export default class App {
     // Fetching Three.js Elements
     this.camera = new Camera();
     this.renderer = new Renderer();
-    // this.loadingMgr = new LoadingMgr();
     this.world = new World();
+    this.controllers = new Controllers(scrollElement);
 
     // Calling Methods
     window.addEventListener('dblclick', () => {
@@ -65,7 +66,6 @@ export default class App {
     this.sizes.resize();
     this.camera.resize();
     this.renderer.resize(); // This line is a must
-    // this.loadingMgr.resize();
     this.world.resize();
   }
 

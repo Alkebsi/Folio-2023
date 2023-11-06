@@ -9,8 +9,8 @@ export default class Home {
     this.tests = this.app.tests;
 
     this.universalParams = {
-      opacity: 0.2,
-      transparent: true,
+      opacity: 1,
+      transparent: false,
     };
 
     if (this.sizes.doorsCount % 2 === 1) {

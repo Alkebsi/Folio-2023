@@ -27,14 +27,9 @@ export default class Doors {
     this.roomDoorsMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     this.doorsGroup = new THREE.Group();
 
-    // Checking if the doors count are odd or even
-    if (this.sizes.doorsCount % 2 === 1) {
-      this.oddDoors = true;
-    }
-
     this.roomDoorSide = true; // true = right / false = left
 
-    if (!this.oddDoors) {
+    if (!this.sizes.oddDoors) {
       for (let i = 0; i < this.sizes.doorsCount; i++) {
         const roomDoors = new THREE.Mesh(
           this.roomDoorsGeometry,

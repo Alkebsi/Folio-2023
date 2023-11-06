@@ -10,6 +10,8 @@ export default class camera {
     this.canvas = this.app.canvas;
     this.tests = this.app.tests;
 
+    this.lookAtObject = new THREE.Vector3(0, 0.75, 0);
+    
     this.setInstance();
     this.setOrbitControls();
     if (this.tests.active) {
@@ -37,7 +39,7 @@ export default class camera {
     //   1000
     // );
 
-    this.instance.position.set(10, 5, 10);
+    this.instance.position.set(0, 0.75, 3);
     this.instanceGroup.add(this.instance);
     this.scene.add(this.instanceGroup);
   }
@@ -45,10 +47,19 @@ export default class camera {
   setOrbitControls() {
     this.controls = new OrbitControls(this.instance, this.canvas);
     this.controls.enableDamping = true;
-    this.controls.enabled = true;
+    this.controls.enabled = false;
   }
 
-  setTests() {}
+  setTests() {
+    this.tests.camera = this.tests.world.addFolder("Camera");
+
+    this.tests.camera
+      .add(this.controls, 'enabled')
+      .name('OrbitControls')
+      .onChange(() => {
+        console.warn('the scroll functionality should stop working');
+      })
+  }
 
   resize() {
     this.instance.aspect = this.sizes.width / this.sizes.height;
@@ -56,6 +67,10 @@ export default class camera {
   }
 
   update() {
-    this.controls.update();
+    if (this.controls.enabled) {
+      this.controls.update();
+    } else {
+      this.instance.lookAt(this.lookAtObject);
+    }
   }
 }

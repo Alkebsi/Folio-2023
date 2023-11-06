@@ -11,7 +11,7 @@
  * Note: First, the window keyword is ommited from the entire
  * project since it is useless at the moment; that is, instead
  * of writing `window.setTimeout` I wrote `setTimeout`. Second,
- * 
+ *
  * ------------------------------------------------
  *
  */
@@ -20,4 +20,6 @@ import './index.css';
 import App from './App/App';
 
 const canvas = document.getElementById('webgl');
-const app = new App(canvas);
+const scrollElement = document.getElementById('scroll-mgr');
+
+const app = new App(canvas, scrollElement);

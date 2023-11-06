@@ -19,7 +19,7 @@ export default class Rooms {
 
     this.roomSide = true; // true = right / false = left
 
-    if (this.sizes.doorsCount % 2 === 0) {
+    if (!this.sizes.oddDoors) {
       for (let i = 0; i < this.sizes.doorsCount; i++) {
         this.rooms = new THREE.Mesh(this.roomsGeometry, this.roomsMaterial);
 
