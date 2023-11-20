@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import App from '../App';
 
 export default class Controllers {
@@ -13,9 +14,9 @@ export default class Controllers {
       this.setScrollFunctionality();
     });
 
-    if (this.camera.controls.enabled) {
-      this.disableScrollFunc();
-    }
+    this.camera.addEventListener('ToggleControllers', () => {
+      console.log('Controllers are triggered')
+    });
   }
 
   setScrollFunctionality() {
@@ -26,7 +27,12 @@ export default class Controllers {
   }
 
   disableScrollFunc() {
-    console.log('this is working');
+    console.log('Scroll Functionality is disabled');
     this.scrollElement.style.display = 'none';
+  }
+
+  enableScrollFunc() {
+    console.log('Scroll Functionality is enabled');
+    this.scrollElement.style.display = 'block';
   }
 }

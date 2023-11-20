@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import App from '../App';
 
-export default class camera {
+export default class Camera extends THREE.EventDispatcher {
   constructor() {
+    super();
     this.app = new App();
     this.scene = this.app.scene;
     this.sizes = this.app.sizes;
@@ -58,7 +59,8 @@ export default class camera {
       .name('OrbitControls')
       .onChange(() => {
         console.warn('the scroll functionality should stop working');
-      })
+        this.dispatchEvent('ToggleControllers');
+      });
   }
 
   resize() {
