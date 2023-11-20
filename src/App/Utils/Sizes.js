@@ -28,7 +28,7 @@ export default class Sizes {
   }
 
   setDoorsCount() {
-    this.doorsCount = 11;
+    this.doorsCount = 110;
 
     if (this.doorsCount % 2 === 1) {
       this.oddDoors = true;

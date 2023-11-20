@@ -9,7 +9,9 @@ export default class Controllers {
 
     this.scrollElement = scrollElement;
 
-    this.setScrollFunctionality();
+    addEventListener('scroll', () => {
+      this.setScrollFunctionality();
+    });
 
     if (this.camera.controls.enabled) {
       this.disableScrollFunc();
@@ -17,7 +19,10 @@ export default class Controllers {
   }
 
   setScrollFunctionality() {
+    const scrollPos = -(scrollY / this.sizes.height) - 1;
 
+    this.camera.instance.position.z = scrollPos;
+    this.camera.lookAtObject.z = scrollPos - 2;
   }
 
   disableScrollFunc() {
