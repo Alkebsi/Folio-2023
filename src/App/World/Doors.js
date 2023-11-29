@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import App from '../App';
+import * as THREE from "three";
+import App from "../App";
 
 export default class Doors {
   constructor() {
@@ -7,19 +7,19 @@ export default class Doors {
     this.scene = this.app.scene;
     this.sizes = this.app.sizes;
 
-    this.setEnteranceDoor();
+    this.setEntranceDoor();
     this.setRoomDoors();
   }
 
-  setEnteranceDoor() {
-    this.enteranceDoor = new THREE.Mesh(
+  setEntranceDoor() {
+    this.entranceDoor = new THREE.Mesh(
       new THREE.BoxGeometry(0.5, 1, 0.1),
       new THREE.MeshBasicMaterial({ color: 0xff0000 })
     );
 
-    this.enteranceDoor.position.set(0, 0.75, 0);
+    this.entranceDoor.position.set(0, 0.75, 0);
 
-    this.scene.add(this.enteranceDoor);
+    this.scene.add(this.entranceDoor);
   }
 
   setRoomDoors() {
@@ -27,10 +27,12 @@ export default class Doors {
     this.roomDoorsMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     this.doorsGroup = new THREE.Group();
 
+    this.doorsGroup.position.set(0, 0, -this.sizes.entranceDepth);
+
     this.roomDoorSide = true; // true = right / false = left
 
     if (!this.sizes.oddDoors) {
-      for (let i = 0; i < this.sizes.doorsCount; i++) {
+      for (let i = 0; i < this.sizes.doorsCount * 2; i++) {
         const roomDoors = new THREE.Mesh(
           this.roomDoorsGeometry,
           this.roomDoorsMaterial
@@ -63,8 +65,8 @@ export default class Doors {
           this.roomDoorSide = true;
         }
         this.doorsGroup.add(roomDoors);
-        this.scene.add(this.doorsGroup);
       }
+      this.scene.add(this.doorsGroup);
     }
   }
 }

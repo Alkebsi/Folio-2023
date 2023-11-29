@@ -6,7 +6,7 @@ export default class Sizes {
     this.canvas = this.app.canvas;
 
     this.setSizes();
-    this.setDoorsCount();
+    this.setDoorsInfo();
     this.getCursorLocation();
     this.getMobileOrentation();
   }
@@ -27,8 +27,9 @@ export default class Sizes {
     }
   }
 
-  setDoorsCount() {
-    this.doorsCount = 110;
+  setDoorsInfo() {
+    this.doorsCount = 4;
+    this.entranceDepth = 1.5;
 
     if (this.doorsCount % 2 === 1) {
       this.oddDoors = true;

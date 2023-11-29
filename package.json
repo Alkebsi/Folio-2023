@@ -4,7 +4,8 @@
   "description": "MKebsi's 2023 Portfolio",
   "scripts": {
     "start": "webpack server --open --config ./bundler/webpack.server.js",
-    "build": "webpack --mode production --config ./bundler/webpack.prod.js"
+    "build": "webpack --mode production --config ./bundler/webpack.prod.js",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -15,10 +16,10 @@
     "3D",
     "Creative",
     "Interactive Experience",
-    "open source web project",
-    "three.js",
-    "webpack",
-    "Website",
+    "Open-source Web Project",
+    "Portfolio",
+    "Personal Website",
+    "Threejs",
     "MKebsi",
     "Mohammed Alkebsi"
   ],
@@ -50,5 +51,8 @@
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.4.0",
     "webpack-merge": "^5.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0"
   }
 }

@@ -81,10 +81,12 @@ body {
 /* Scroll Manager */
 #scroll-mgr {
   position: relative;
-  width: 100%;
+  width: 50%;
   height: 700vh; /* This will be reseted in JS accouding to the doors count  */
-  background-color: #f0f3;
   z-index: 11;
+
+  border-right: 3px dashed #400;
+  box-sizing: border-box;
 }
 
 /* WebGL and 3D Stuff */

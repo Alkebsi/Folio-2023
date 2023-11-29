@@ -20,8 +20,13 @@ export default class Controllers {
   }
 
   setScrollFunctionality() {
-    const scrollPos = -(scrollY / this.sizes.height) - 1;
+    const scrollPos = -(scrollY / this.sizes.height);
 
+    // Loop back of the doors count is reached
+    if (scrollPos <= -this.sizes.doorsCount * 0.5) {
+      window.scrollTo(0, 0);
+    } 
+    
     this.camera.instance.position.z = scrollPos;
     this.camera.lookAtObject.z = scrollPos - 2;
   }

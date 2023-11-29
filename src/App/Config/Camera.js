@@ -26,7 +26,7 @@ export default class Camera extends THREE.EventDispatcher {
       45,
       this.sizes.width / this.sizes.height,
       0.01,
-      10000
+      100
     );
 
     // Added a testing orthographic camera to my scene with

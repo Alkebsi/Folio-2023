@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import App from '../App';
+import * as THREE from "three";
+import App from "../App";
 
 export default class Home {
   constructor() {
@@ -13,11 +13,8 @@ export default class Home {
       transparent: false,
     };
 
-    if (this.sizes.doorsCount % 2 === 1) {
-      this.buildingDepth = this.sizes.doorsCount;
-    } else {
-      this.buildingDepth = this.sizes.doorsCount * 0.5;
-    }
+    // This may get changed later!
+    this.buildingDepth = this.sizes.doorsCount + this.sizes.entranceDepth;
 
     this.setInstance();
     this.setGround();
@@ -37,7 +34,11 @@ export default class Home {
       })
     );
 
-    this.instance.position.set(0, 10, -this.buildingDepth * 0.5);
+    this.instance.position.set(
+      0,
+      10,
+      -this.buildingDepth * 0.5
+    );
 
     this.scene.add(this.instance);
   }
@@ -60,18 +61,22 @@ export default class Home {
     this.innerHall = new THREE.Mesh(
       new THREE.BoxGeometry(2, 1.5, this.buildingDepth - 0.01),
       new THREE.MeshBasicMaterial({
-        color: 0xffffff,
+        color: 0x000020,
         side: THREE.DoubleSide,
       })
     );
 
-    this.innerHall.position.set(0, 0.753, -this.buildingDepth * 0.5);
+    this.innerHall.position.set(
+      0,
+      0.753,
+      -this.buildingDepth * 0.5
+    );
 
     this.scene.add(this.innerHall);
   }
 
   setTests() {
-    this.tests.objectsOpacity = this.tests.world.addFolder('ObjectsOpacity');
+    this.tests.objectsOpacity = this.tests.world.addFolder("ObjectsOpacity");
 
     // Setting the ground to transparent
     this.ground.material.transparent = true;
@@ -88,13 +93,13 @@ export default class Home {
     updateOpacity();
 
     this.tests.objectsOpacity
-      .add(this.universalParams, 'opacity', 0, 1, 0.01)
-      .name('Opacity')
+      .add(this.universalParams, "opacity", 0, 1, 0.01)
+      .name("Opacity")
       .onFinishChange(updateOpacity);
 
     this.tests.objectsOpacity
-      .add(this.universalParams, 'transparent')
-      .name('Transparency')
+      .add(this.universalParams, "transparent")
+      .name("Transparency")
       .onFinishChange(updateOpacity);
   }
 }
