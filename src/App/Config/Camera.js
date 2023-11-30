@@ -1,6 +1,6 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import App from '../App';
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import App from "../App";
 
 export default class Camera extends THREE.EventDispatcher {
   constructor() {
@@ -12,7 +12,7 @@ export default class Camera extends THREE.EventDispatcher {
     this.tests = this.app.tests;
 
     this.lookAtObject = new THREE.Vector3(0, 0.75, 0);
-    
+
     this.setInstance();
     this.setOrbitControls();
     if (this.tests.active) {
@@ -55,11 +55,13 @@ export default class Camera extends THREE.EventDispatcher {
     this.tests.camera = this.tests.world.addFolder("Camera");
 
     this.tests.camera
-      .add(this.controls, 'enabled')
-      .name('OrbitControls')
+      .add(this.controls, "enabled")
+      .name("OrbitControls")
       .onChange(() => {
-        console.warn('the scroll functionality should stop working');
-        this.dispatchEvent('ToggleControllers');
+        this.dispatchEvent({
+          type: "toggleControllers",
+          message: this.controls.enabled,
+        });
       });
   }
 

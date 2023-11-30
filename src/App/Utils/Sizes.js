@@ -28,7 +28,7 @@ export default class Sizes {
   }
 
   setDoorsInfo() {
-    this.doorsCount = 4;
+    this.doorsCount = 6;
     this.entranceDepth = 1.5;
 
     if (this.doorsCount % 2 === 1) {
