@@ -27,12 +27,12 @@ export default class Doors {
     this.roomDoorsMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     this.doorsGroup = new THREE.Group();
 
-    this.doorsGroup.position.set(0, 0, -this.sizes.entranceDepth);
+    this.doorsCount = this.sizes.doorsCount * 2 + 2;
 
     this.roomDoorSide = true; // true = right / false = left
 
     if (!this.sizes.oddDoors) {
-      for (let i = 0; i < this.sizes.doorsCount * 2; i++) {
+      for (let i = 0; i < this.doorsCount; i++) {
         const roomDoors = new THREE.Mesh(
           this.roomDoorsGeometry,
           this.roomDoorsMaterial
@@ -50,7 +50,7 @@ export default class Doors {
       }
       this.scene.add(this.doorsGroup);
     } else {
-      for (let i = 0; i < this.sizes.doorsCount * 2; i++) {
+      for (let i = 0; i < this.doorsCount; i++) {
         const roomDoors = new THREE.Mesh(
           this.roomDoorsGeometry,
           this.roomDoorsMaterial
