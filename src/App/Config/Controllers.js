@@ -1,4 +1,4 @@
-import App from "../App";
+import App from '../App';
 
 export default class Controllers {
   constructor(scrollElement) {
@@ -9,11 +9,11 @@ export default class Controllers {
 
     this.scrollElement = scrollElement;
 
-    addEventListener("scroll", () => {
+    window.addEventListener('scroll', () => {
       this.setScrollFunctionality();
     });
 
-    this.camera.addEventListener("toggleControllers", (e) => {
+    this.camera.addEventListener('toggleControllers', (e) => {
       if (e.message) {
         this.disableScrollFunc();
       } else {
@@ -23,7 +23,7 @@ export default class Controllers {
   }
 
   setScrollFunctionality() {
-    const scrollPos = -(scrollY / this.sizes.height);
+    const scrollPos = -(window.scrollY / this.sizes.height);
 
     // Loop back of the doors count is reached
     if (scrollPos <= -this.sizes.doorsCount * 0.5) {
@@ -35,13 +35,13 @@ export default class Controllers {
   }
 
   disableScrollFunc() {
-    console.log("Scroll Functionality is disabled");
-    this.scrollElement.style.display = "none";
+    console.log('Scroll Functionality is disabled');
+    this.scrollElement.style.display = 'none';
   }
 
   enableScrollFunc() {
-    console.log("Scroll Functionality is enabled");
+    console.log('Scroll Functionality is enabled');
     this.camera.instance.position.set(0, 0.75, 0);
-    this.scrollElement.style.display = "block";
+    this.scrollElement.style.display = 'block';
   }
 }

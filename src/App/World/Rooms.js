@@ -20,7 +20,7 @@ export default class Rooms {
     this.roomSide = true; // true = right / false = left
 
     if (!this.sizes.oddDoors) {
-      for (let i = 0; i < this.sizes.doorsCount; i++) {
+      for (let i = 0; i < this.sizes.doorsCount; i += 1) {
         this.rooms = new THREE.Mesh(this.roomsGeometry, this.roomsMaterial);
 
         // Making the doors face each other
@@ -37,7 +37,7 @@ export default class Rooms {
         this.scene.add(this.rooms);
       }
     } else {
-      for (let i = 0; i < this.sizes.doorsCount * 2; i++) {
+      for (let i = 0; i < this.sizes.doorsCount * 2; i += 1) {
         this.rooms = new THREE.Mesh(this.roomsGeometry, this.roomsMaterial);
 
         // Making the doors face each other
@@ -48,7 +48,7 @@ export default class Rooms {
           this.rooms.position.set(-3.52, 0.75, -i * 0.5);
           this.roomSide = true;
         }
-        
+
         this.scene.add(this.rooms);
       }
     }

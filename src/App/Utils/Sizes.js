@@ -22,8 +22,10 @@ export default class Sizes {
   }
 
   fullScreen() {
+    this.htmlDocument = document.querySelector('html');
+
     if (!document.fullscreenElement) {
-      document.querySelector('html').requestFullscreen();
+      this.htmlDocument.requestFullscreen();
     }
   }
 
@@ -36,7 +38,9 @@ export default class Sizes {
     } else if (this.doorsCount % 2 === 0) {
       this.oddDoors = false;
     } else {
-      console.error(`The doors count is not set appropriately: ${this.doorsCount}`)
+      console.error(
+        `The doors count is not set appropriately: ${this.doorsCount}`,
+      );
     }
   }
 

@@ -1,6 +1,6 @@
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import App from "../App";
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import App from '../App';
 
 export default class Camera extends THREE.EventDispatcher {
   constructor() {
@@ -26,7 +26,7 @@ export default class Camera extends THREE.EventDispatcher {
       45,
       this.sizes.width / this.sizes.height,
       0.01,
-      100
+      100,
     );
 
     // Added a testing orthographic camera to my scene with
@@ -52,14 +52,14 @@ export default class Camera extends THREE.EventDispatcher {
   }
 
   setTests() {
-    this.tests.camera = this.tests.world.addFolder("Camera");
+    this.tests.camera = this.tests.world.addFolder('Camera');
 
     this.tests.camera
-      .add(this.controls, "enabled")
-      .name("OrbitControls")
+      .add(this.controls, 'enabled')
+      .name('OrbitControls')
       .onChange(() => {
         this.dispatchEvent({
-          type: "toggleControllers",
+          type: 'toggleControllers',
           message: this.controls.enabled,
         });
       });

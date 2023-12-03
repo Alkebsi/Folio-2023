@@ -1,9 +1,6 @@
-import * as THREE from "three";
-import App from "../App";
-import Models from "./Models";
-import Home from "./Home";
-import Doors from "./Doors";
-import Rooms from "./Rooms";
+import App from '../App';
+import Home from './Home';
+import Doors from './Doors';
 
 export default class World {
   constructor() {
@@ -20,10 +17,4 @@ export default class World {
       this.setTests();
     }
   }
-
-  resize() {}
-
-  update() {}
-
-  setTests() {}
 }

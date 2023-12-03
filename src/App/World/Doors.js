@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import App from "../App";
+import * as THREE from 'three';
+import App from '../App';
 
 export default class Doors {
   constructor() {
@@ -14,7 +14,7 @@ export default class Doors {
   setEntranceDoor() {
     this.entranceDoor = new THREE.Mesh(
       new THREE.BoxGeometry(0.5, 1, 0.1),
-      new THREE.MeshBasicMaterial({ color: 0xff0000 })
+      new THREE.MeshBasicMaterial({ color: 0xff0000 }),
     );
 
     this.entranceDoor.position.set(0, 0.75, 0);
@@ -32,10 +32,10 @@ export default class Doors {
     this.roomDoorSide = true; // true = right / false = left
 
     if (!this.sizes.oddDoors) {
-      for (let i = 0; i < this.doorsCount; i++) {
+      for (let i = 0; i < this.doorsCount; i += 1) {
         const roomDoors = new THREE.Mesh(
           this.roomDoorsGeometry,
-          this.roomDoorsMaterial
+          this.roomDoorsMaterial,
         );
 
         // Making the doors face each other
@@ -50,10 +50,10 @@ export default class Doors {
       }
       this.scene.add(this.doorsGroup);
     } else {
-      for (let i = 0; i < this.doorsCount; i++) {
+      for (let i = 0; i < this.doorsCount; i += 1) {
         const roomDoors = new THREE.Mesh(
           this.roomDoorsGeometry,
-          this.roomDoorsMaterial
+          this.roomDoorsMaterial,
         );
 
         // Making the doors face each other

@@ -22,4 +22,5 @@ import App from './App/App';
 const canvas = document.getElementById('webgl');
 const scrollElement = document.getElementById('scroll-mgr');
 
+// eslint-disable-next-line no-unused-vars
 const app = new App(canvas, scrollElement);

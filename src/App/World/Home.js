@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import App from "../App";
+import * as THREE from 'three';
+import App from '../App';
 
 export default class Home {
   constructor() {
@@ -31,14 +31,10 @@ export default class Home {
       new THREE.MeshBasicMaterial({
         color: 0x000000,
         side: THREE.DoubleSide,
-      })
+      }),
     );
 
-    this.instance.position.set(
-      0,
-      10,
-      -this.buildingDepth * 0.5
-    );
+    this.instance.position.set(0, 10, -this.buildingDepth * 0.5);
 
     this.scene.add(this.instance);
   }
@@ -48,7 +44,7 @@ export default class Home {
       new THREE.PlaneGeometry(50, 50),
       new THREE.MeshBasicMaterial({
         color: 0x000000,
-      })
+      }),
     );
 
     this.ground.position.set(0, -0.01, 0); // to avoid z-conflect!
@@ -63,20 +59,16 @@ export default class Home {
       new THREE.MeshBasicMaterial({
         color: 0x000020,
         side: THREE.DoubleSide,
-      })
+      }),
     );
 
-    this.innerHall.position.set(
-      0,
-      0.753,
-      -this.buildingDepth * 0.5
-    );
+    this.innerHall.position.set(0, 0.753, -this.buildingDepth * 0.5);
 
     this.scene.add(this.innerHall);
   }
 
   setTests() {
-    this.tests.objectsOpacity = this.tests.world.addFolder("ObjectsOpacity");
+    this.tests.objectsOpacity = this.tests.world.addFolder('ObjectsOpacity');
 
     // Setting the ground to transparent
     this.ground.material.transparent = true;
@@ -93,13 +85,13 @@ export default class Home {
     updateOpacity();
 
     this.tests.objectsOpacity
-      .add(this.universalParams, "opacity", 0, 1, 0.01)
-      .name("Opacity")
+      .add(this.universalParams, 'opacity', 0, 1, 0.01)
+      .name('Opacity')
       .onFinishChange(updateOpacity);
 
     this.tests.objectsOpacity
-      .add(this.universalParams, "transparent")
-      .name("Transparency")
+      .add(this.universalParams, 'transparent')
+      .name('Transparency')
       .onFinishChange(updateOpacity);
   }
 }
