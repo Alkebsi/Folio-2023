@@ -26,10 +26,11 @@ export default class Tests {
   }
 
   isMobile() {
+    this.isMobile = true;
+
     if (navigator.userAgent.search(/(mobile|android|ios|phone)/i) > 0) {
-      return true;
-    } else {
-      return false;
+      return this.isMobile;
     }
+    return !this.isMobile;
   }
 }

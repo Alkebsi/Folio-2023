@@ -9,7 +9,6 @@ import Interval from './Utils/Interval';
 // Three.js Configurations
 import Camera from './Config/Camera';
 import Renderer from './Config/Renderer';
-import Resources from './Utils/Resources';
 
 // Three.js Visual Assets
 import World from './World/World';
@@ -21,6 +20,7 @@ export default class App {
   constructor(canvas, scrollElement) {
     // Checking if it was called once before
     if (instance) {
+      // eslint-disable-next-line no-constructor-return
       return instance;
     }
     instance = this;

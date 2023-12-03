@@ -1,49 +1,47 @@
-const path = require('path')
-const { merge } = require('webpack-merge')
-const commonConfiguration = require('./webpack.common.js')
+const path = require('path');
+const { merge } = require('webpack-merge');
+const portFinderSync = require('portfinder-sync');
+const commonConfiguration = require('./webpack.common');
 // const ip = require('internal-ip')
-const portFinderSync = require('portfinder-sync')
 
-const infoColor = (_message) =>
-{
-    return `\u001b[1m\u001b[34m${_message}\u001b[39m\u001b[22m`
-}
+// eslint-disable-next-line no-unused-vars
+const infoColor = (_message) => `\u001b[1m\u001b[34m${_message}\u001b[39m\u001b[22m`;
 
 module.exports = merge(
-    commonConfiguration,
-    {
-        stats: 'errors-warnings',
-        mode: 'development',
-        devServer:
+  commonConfiguration,
+  {
+    stats: 'errors-warnings',
+    mode: 'development',
+    devServer:
         {
-            host: 'local-ip',
-            port: portFinderSync.getPort(8080),
-            open: true,
-            https: false,
-            allowedHosts: 'all',
-            hot: false,
-            watchFiles: ['src/**', 'static/**'],
-            static:
+          host: 'local-ip',
+          port: portFinderSync.getPort(8080),
+          open: true,
+          https: false,
+          allowedHosts: 'all',
+          hot: false,
+          watchFiles: ['src/**', 'static/**'],
+          static:
             {
-                watch: true,
-                directory: path.join(__dirname, '../static')
+              watch: true,
+              directory: path.join(__dirname, '../static'),
             },
-            client:
+          client:
             {
-                logging: 'none',
-                overlay: true,
-                progress: false
+              logging: 'none',
+              overlay: true,
+              progress: false,
             },
-            // onAfterSetupMiddleware: function(devServer)
-            // {
-            //     const port = devServer.options.port
-            //     const https = devServer.options.https ? 's' : ''
-            //     const localIp = ip.v4.sync()
-            //     const domain1 = `http${https}://${localIp}:${port}`
-            //     const domain2 = `http${https}://localhost:${port}`
-                
-            //     console.log(`Project running at:\n  - ${infoColor(domain1)}\n  - ${infoColor(domain2)}`)
-            // }
-        }
-    }
-)
+          // onAfterSetupMiddleware: function(devServer)
+          // {
+          //     const port = devServer.options.port
+          //     const https = devServer.options.https ? 's' : ''
+          //     const localIp = ip.v4.sync()
+          //     const domain1 = `http${https}://${localIp}:${port}`
+          //     const domain2 = `http${https}://localhost:${port}`
+
+          //  console.log(`Project running at:\n - ${infoColor(domain1)}\n - ${infoColor(domain2)}`)
+          // }
+        },
+  },
+);

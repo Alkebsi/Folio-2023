@@ -10,7 +10,7 @@ export default class Renderer {
     this.scene = this.app.scene;
     this.tests = this.app.tests;
 
-    this.clearColor = "#ff0000";
+    this.clearColor = '#ff0000';
 
     this.setInstance();
     if (this.tests.active) {
@@ -21,7 +21,7 @@ export default class Renderer {
   setInstance() {
     this.instance = new THREE.WebGLRenderer({
       canvas: this.canvas,
-      //logarithmicDepthBuffer: true,
+      // logarithmicDepthBuffer: true,
       powerPreference: 'high-performance',
       antialias: true,
     });

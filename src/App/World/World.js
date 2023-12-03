@@ -17,4 +17,13 @@ export default class World {
       this.setTests();
     }
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  update() {}
+
+  // eslint-disable-next-line class-methods-use-this
+  resize() {}
+
+  // eslint-disable-next-line class-methods-use-this
+  setTests() {}
 }

@@ -12,7 +12,7 @@ export default class Resources {
     // Update the loading paned svg view port height once loading the page
     this.loadingSVGContainer.setAttribute(
       'viewBox',
-      `0 0 ${this.sizes.width} ${this.sizes.height}`
+      `0 0 ${this.sizes.width} ${this.sizes.height}`,
     );
 
     this.setLoadingScene();
@@ -39,7 +39,7 @@ export default class Resources {
 
       console.log();
     };
-    addEventListener('click', () => {
+    window.addEventListener('click', () => {
       this.addCircle();
     });
   }
@@ -47,10 +47,9 @@ export default class Resources {
   resize() {
     this.loadingSVGContainer.setAttribute(
       'viewBox',
-      `0 0 ${this.sizes.width} ${this.sizes.height}`
+      `0 0 ${this.sizes.width} ${this.sizes.height}`,
     );
-    
-    
+
     this.cursor = {
       x: (this.sizes.mouseLocation.x * 0.5 + 0.5) * this.sizes.width,
       y: (-this.sizes.mouseLocation.y * 0.5 + 0.5) * this.sizes.height,

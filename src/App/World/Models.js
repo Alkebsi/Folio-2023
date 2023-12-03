@@ -12,7 +12,7 @@ export default class Models {
   setModels() {
     const box = new THREE.Mesh(
       new THREE.BoxGeometry(2, 2, 2),
-      new THREE.MeshBasicMaterial({ color: 0xff0000 })
+      new THREE.MeshBasicMaterial({ color: 0xff0000 }),
     );
 
     this.scene.add(box);
