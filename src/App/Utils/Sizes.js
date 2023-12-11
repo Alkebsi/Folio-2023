@@ -4,6 +4,7 @@ export default class Sizes {
   constructor() {
     this.app = new App();
     this.canvas = this.app.canvas;
+    this.logger = this.app.logger;
 
     this.setSizes();
     this.setDoorsInfo();
@@ -31,6 +32,7 @@ export default class Sizes {
 
   setDoorsInfo() {
     this.doorsCount = 6;
+    this.fakeDoors = 100;
     this.entranceDepth = 1.5;
 
     if (this.doorsCount % 2 === 1) {
@@ -38,7 +40,7 @@ export default class Sizes {
     } else if (this.doorsCount % 2 === 0) {
       this.oddDoors = false;
     } else {
-      console.error(
+      this.logger.error(
         `The doors count is not set appropriately: ${this.doorsCount}`,
       );
     }

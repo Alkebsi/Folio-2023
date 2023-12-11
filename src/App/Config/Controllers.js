@@ -3,6 +3,7 @@ import App from '../App';
 export default class Controllers {
   constructor(scrollElement) {
     this.app = new App();
+    this.logger = this.app.logger;
     this.camera = this.app.camera;
     this.sizes = this.app.sizes;
     this.tests = this.app.tests;
@@ -35,12 +36,12 @@ export default class Controllers {
   }
 
   disableScrollFunc() {
-    console.log('Scroll Functionality is disabled');
+    this.logger.info('Scroll Functionality is disabled');
     this.scrollElement.style.display = 'none';
   }
 
   enableScrollFunc() {
-    console.log('Scroll Functionality is enabled');
+    this.logger.info('Scroll Functionality is enabled');
     this.camera.instance.position.set(0, 0.75, 0);
     this.scrollElement.style.display = 'block';
   }

@@ -2,6 +2,7 @@
 import { Scene } from 'three';
 
 // Utils
+import Logger from './Utils/Logger';
 import Tests from './Utils/Tests';
 import Sizes from './Utils/Sizes';
 import Interval from './Utils/Interval';
@@ -27,6 +28,9 @@ export default class App {
 
     // Parameters
     this.canvas = canvas;
+
+    // Logger
+    this.logger = new Logger();
 
     // Fetching Utils
     this.tests = new Tests();
@@ -58,7 +62,7 @@ export default class App {
     }
 
     // Finall Log
-    console.log('Site is ready');
+    this.logger.info('Site is ready');
   }
 
   // Called once the page is resized

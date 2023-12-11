@@ -36,8 +36,6 @@ export default class Resources {
       if (this.loadingSVGContainer.children.length < 50) {
         this.loadingSVGContainer.innerHTML += this.circle;
       }
-
-      console.log();
     };
     window.addEventListener('click', () => {
       this.addCircle();
