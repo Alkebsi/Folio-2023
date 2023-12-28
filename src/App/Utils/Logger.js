@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
 export default class Logger {
   info(message) {
-    this.info = message;
-    console.log(this.info);
+    this.msg = message;
+    console.log(this.msg);
   }
 
   warn(warning) {
-    this.warning = warning;
-    console.warn(this.warning);
+    this.msg = warning;
+    console.warn(this.msg);
   }
 
   error(error) {
-    this.error = error;
-    console.error(this.error);
+    this.msg = error;
+    console.error(this.msg);
   }
 }
