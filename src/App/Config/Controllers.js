@@ -9,9 +9,14 @@ export default class Controllers {
     this.tests = this.app.tests;
 
     this.scrollElement = scrollElement;
+    this.isClicking = false;
 
     window.addEventListener('scroll', () => {
       this.setScrollFunctionality();
+    });
+
+    window.addEventListener('mousemove', () => {
+      this.setRotationalFuncitonality();
     });
 
     this.camera.addEventListener('toggleControllers', (e) => {
@@ -33,6 +38,19 @@ export default class Controllers {
 
     this.camera.instance.position.z = scrollPos;
     this.camera.lookAtObject.z = scrollPos - 2;
+  }
+
+  setRotationalFuncitonality() {
+    window.addEventListener('mousedown', () => {
+      this.isClicking = true;
+    });
+    window.addEventListener('mouseup', () => {
+      this.isClicking = false;
+    });
+
+    if (this.isClicking) {
+      this.camera.lookAtObject.x = -this.sizes.mouseLocation.x;
+    }
   }
 
   disableScrollFunc() {
