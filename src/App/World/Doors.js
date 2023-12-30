@@ -79,9 +79,6 @@ export default class Doors {
     this.fakeDoorsCount = this.sizes.fakeDoors;
     this.space = this.doorsCount * 0.5;
 
-    // Temporarly there to see the fake doors more clearly
-    this.roomDoorsMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-
     for (let i = 0; i < this.fakeDoorsCount; i += 1) {
       if (this.roomDoorsGeometry && this.roomDoorsMaterial) {
         const roomDoors = new THREE.Mesh(

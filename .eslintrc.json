@@ -9,6 +9,7 @@
         "sourceType": "module"
     },
     "rules": {
-        "import/no-cycle": 0
+        "import/no-cycle": 0,
+        "operator-linebreak": 0
     }
 }

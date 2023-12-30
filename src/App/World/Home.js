@@ -13,8 +13,11 @@ export default class Home {
       transparent: false,
     };
 
-    // This may get changed later!
-    this.buildingDepth = this.sizes.doorsCount + this.sizes.entranceDepth;
+    // This tells how big the home is
+    this.buildingDepth =
+      this.sizes.doorsCount +
+      this.sizes.entranceDepth +
+      this.sizes.fakeDoors / 2;
 
     this.setInstance();
     this.setGround();
