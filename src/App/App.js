@@ -81,11 +81,13 @@ export default class App {
       this.camera.update();
       this.world.update();
       this.renderer.update(); // Not in need if passes are being used.
+      this.controllers.update();
       this.tests.stats.end();
     } else {
       this.interval.update();
       this.camera.update();
       this.world.update();
+      this.controllers.update();
       this.renderer.update(); // Not in need if passes are being used.
     }
 
