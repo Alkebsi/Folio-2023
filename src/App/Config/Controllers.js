@@ -23,7 +23,7 @@ export default class Controllers {
     });
 
     this.setCameraControls();
-    
+
     this.camera.addEventListener('toggleControllers', (e) => {
       if (e.message) {
         this.disableScrollFunc();
@@ -47,12 +47,13 @@ export default class Controllers {
 
   setCameraControls() {
     this.cameraControls = new CameraControls(this.camera.instance, this.canvas);
-    this.cameraControls.minDistance = this.cameraControls.maxDistance = 1;
+    this.cameraControls.minDistance = 1;
+    this.cameraControls.maxDistance = 1;
     this.cameraControls.azimuthRotateSpeed = -0.3; // negative value to invert rotation direction
     this.cameraControls.polarRotateSpeed = -0.3; // negative value to invert rotation direction
     this.cameraControls.truckSpeed = 10;
     this.cameraControls.mouseButtons.wheel = null;
-    this.cameraControls.touches.two = CameraControls.ACTION.TOUCH_TRUCK; // TODO: Check the code here in a mobile
+    this.cameraControls.touches.two = CameraControls.ACTION.TOUCH_TRUCK; // Check on mobile
     this.cameraControls.smoothTime = 200;
     this.cameraControls.draggingSmoothTime = 200;
     this.cameraControls.saveState();
