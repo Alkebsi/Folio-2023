@@ -12,6 +12,7 @@ export default class Camera extends THREE.EventDispatcher {
     this.tests = this.app.tests;
 
     this.lookAtObject = new THREE.Vector3(0, 0.75, 0);
+    this.EPS = 1e-5;
 
     this.setInstance();
     this.setOrbitControls();
@@ -40,12 +41,9 @@ export default class Camera extends THREE.EventDispatcher {
     //   1000
     // );
 
-    const EPS = 1e-5;
-    this.instance.position.set(0, 0, EPS);
-    this.instance.lookAt(this.lookAtObject);
-
+    this.instance.position.set(0, 0, this.EPS);
     this.instanceGroup.add(this.instance);
-    this.instanceGroup.position.set(0, 0.75, 0);
+    this.instanceGroup.position.set(0, 0, 0);
     this.scene.add(this.instanceGroup);
   }
 
@@ -78,7 +76,7 @@ export default class Camera extends THREE.EventDispatcher {
     if (this.controls.enabled) {
       this.controls.update();
     } else {
-      this.instance.lookAt(this.lookAtObject);
+      // this.instance.lookAt(this.lookAtObject);
     }
   }
 }

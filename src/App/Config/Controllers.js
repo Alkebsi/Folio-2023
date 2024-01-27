@@ -41,21 +41,32 @@ export default class Controllers {
       window.scrollTo(0, 0);
     }
 
-    this.camera.instance.position.set(0, 0.75, scrollPos);
+    this.cameraControls.moveTo(0, 0, scrollPos, true);
+    // this.camera.instanceGroup.position.set(0, 0.75, scrollPos);
     // this.camera.lookAtObject.z = scrollPos - 2;
   }
 
   setCameraControls() {
     this.cameraControls = new CameraControls(this.camera.instance, this.canvas);
+
     this.cameraControls.minDistance = 1;
     this.cameraControls.maxDistance = 1;
-    this.cameraControls.azimuthRotateSpeed = -0.3; // negative value to invert rotation direction
-    this.cameraControls.polarRotateSpeed = -0.3; // negative value to invert rotation direction
-    this.cameraControls.truckSpeed = 10;
-    this.cameraControls.mouseButtons.wheel = null;
-    this.cameraControls.touches.two = CameraControls.ACTION.TOUCH_TRUCK; // Check on mobile
-    this.cameraControls.smoothTime = 200;
+
+    this.cameraControls.maxAzimuthAngle = Math.PI * 0.25;
+    this.cameraControls.minAzimuthAngle = -Math.PI * 0.25;
+    this.cameraControls.azimuthRotateSpeed = -0.1; // negative value to invert rotation direction
+
+    this.cameraControls.maxPolarAngle = Math.PI * 0.625;
+    this.cameraControls.minPolarAngle = -Math.PI * 0.625;
+    this.cameraControls.polarRotateSpeed = -0.1; // negative value to invert rotation direction
+
+    this.cameraControls.mouseButtons.wheel = CameraControls.ACTION.NONE;
+    this.cameraControls.touches.two = CameraControls.ACTION.NONE;
+    // this.cameraControls.truckSpeed = 10; // not needed as I manage the scrolling functionality
+
+    this.cameraControls.smoothTime = 0;
     this.cameraControls.draggingSmoothTime = 200;
+
     this.cameraControls.saveState();
   }
 
