@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import App from '../App';
 
 export default class Camera extends THREE.EventDispatcher {
@@ -11,11 +10,9 @@ export default class Camera extends THREE.EventDispatcher {
     this.canvas = this.app.canvas;
     this.tests = this.app.tests;
 
-    this.lookAtObject = new THREE.Vector3(0, 0.75, 0);
     this.EPS = 1e-5;
 
     this.setInstance();
-    this.setOrbitControls();
     if (this.tests.active) {
       this.setTests();
     }
@@ -47,36 +44,12 @@ export default class Camera extends THREE.EventDispatcher {
     this.scene.add(this.instanceGroup);
   }
 
-  setOrbitControls() {
-    this.controls = new OrbitControls(this.instance, this.canvas);
-    this.controls.enableDamping = true;
-    this.controls.enabled = false;
-  }
-
-  setTests() {
-    this.tests.camera = this.tests.world.addFolder('Camera');
-
-    this.tests.camera
-      .add(this.controls, 'enabled')
-      .name('OrbitControls')
-      .onChange(() => {
-        this.dispatchEvent({
-          type: 'toggleControllers',
-          message: this.controls.enabled,
-        });
-      });
-  }
+  setTests() {}
 
   resize() {
     this.instance.aspect = this.sizes.width / this.sizes.height;
     this.instance.updateProjectionMatrix();
   }
 
-  update() {
-    if (this.controls.enabled) {
-      this.controls.update();
-    } else {
-      // this.instance.lookAt(this.lookAtObject);
-    }
-  }
+  update() {}
 }

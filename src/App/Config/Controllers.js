@@ -41,7 +41,7 @@ export default class Controllers {
       window.scrollTo(0, 0);
     }
 
-    this.cameraControls.moveTo(0, 0, scrollPos, true);
+    this.cameraControls.moveTo(0, 0.75, scrollPos, true);
     // this.camera.instanceGroup.position.set(0, 0.75, scrollPos);
     // this.camera.lookAtObject.z = scrollPos - 2;
   }
@@ -67,6 +67,7 @@ export default class Controllers {
     this.cameraControls.smoothTime = 0;
     this.cameraControls.draggingSmoothTime = 200;
 
+    this.cameraControls.moveTo(0, 0.75, 0, true);
     this.cameraControls.saveState();
   }
 
