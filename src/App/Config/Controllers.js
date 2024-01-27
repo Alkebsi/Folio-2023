@@ -31,6 +31,10 @@ export default class Controllers {
         this.enableScrollFunc();
       }
     });
+
+    if (this.tests.active) {
+      this.setTests();
+    }
   }
 
   setScrollFunctionality() {
@@ -57,17 +61,17 @@ export default class Controllers {
     this.cameraControls.azimuthRotateSpeed = -0.1; // negative value to invert rotation direction
 
     this.cameraControls.maxPolarAngle = Math.PI * 0.625;
-    this.cameraControls.minPolarAngle = -Math.PI * 0.625;
+    this.cameraControls.minPolarAngle = Math.PI * 0.375;
     this.cameraControls.polarRotateSpeed = -0.1; // negative value to invert rotation direction
 
     this.cameraControls.mouseButtons.wheel = CameraControls.ACTION.NONE;
     this.cameraControls.touches.two = CameraControls.ACTION.NONE;
     // this.cameraControls.truckSpeed = 10; // not needed as I manage the scrolling functionality
 
-    this.cameraControls.smoothTime = 0;
+    this.cameraControls.smoothTime = 0; // This should not be changed!
     this.cameraControls.draggingSmoothTime = 200;
 
-    this.cameraControls.moveTo(0, 0.75, 0, true);
+    this.cameraControls.moveTo(0, 0.75, 3, true);
     this.cameraControls.saveState();
   }
 
@@ -80,6 +84,53 @@ export default class Controllers {
     this.logger.info('Scroll Functionality is enabled');
     this.camera.instanceGroup.position.set(0, 0.75, 0);
     this.scrollElement.style.display = 'block';
+  }
+
+  setTests() {
+    this.tests.controllers = this.tests.gui.addFolder('Controllers');
+    this.tests.camCons = this.tests.controllers.addFolder('Camera');
+
+    this.tests.camCons
+      .add(
+        this.cameraControls,
+        'maxAzimuthAngle',
+        -Math.PI * 2,
+        Math.PI * 2,
+        0.001,
+      )
+      .name('MaxAzAngle');
+    this.tests.camCons
+      .add(
+        this.cameraControls,
+        'minAzimuthAngle',
+        -Math.PI * 2,
+        Math.PI * 2,
+        0.001,
+      )
+      .name('MinAzAngle');
+    this.tests.camCons
+      .add(this.cameraControls, 'azimuthRotateSpeed', -1, 1, 0.001)
+      .name('RotateSpeed');
+
+    this.tests.camCons
+      .add(this.cameraControls, 'maxPolarAngle', -Math.PI, Math.PI, 0.001)
+      .name('MaxPoAngle');
+    this.tests.camCons
+      .add(this.cameraControls, 'minPolarAngle', -Math.PI, Math.PI, 0.001)
+      .name('MinPoAngle');
+    this.tests.camCons.add(
+      this.cameraControls,
+      'polarRotateSpeed',
+      -1,
+      1,
+      0.001,
+    );
+
+    this.tests.camCons
+      .add(this.cameraControls, 'draggingSmoothTime', 0, 1000, 1)
+      .name('DragSmooth');
+
+    this.tests.controllers.add(this.sizes, 'doorsCount', 0, 1000, 1);
   }
 
   update() {
