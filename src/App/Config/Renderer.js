@@ -34,10 +34,6 @@ export default class Renderer {
   }
 
   setTests() {
-    this.tests.renderer = this.tests.gui.addFolder('Renderer');
-
-    // this.tests.renderer
-    // .add(this.instance, 'toneMappingExposure', 0, 10, 0.001);
     this.tests.renderer
       .add(this.instance, 'useLegacyLights')
       .name('LegacyLights');
@@ -53,6 +49,10 @@ export default class Renderer {
   }
 
   update() {
-    this.instance.render(this.scene, this.camera.instance);
+    if (this.camera.renderCamera === 'debug') {
+      this.instance.render(this.scene, this.camera.debugCamera);
+    } else {
+      this.instance.render(this.scene, this.camera.instance);
+    }
   }
 }

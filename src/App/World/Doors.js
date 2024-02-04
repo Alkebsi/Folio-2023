@@ -7,12 +7,35 @@ export default class Doors {
     this.logger = this.app.logger;
     this.scene = this.app.scene;
     this.sizes = this.app.sizes;
+    this.resources = this.app.resources;
+
+    this.doorModels = null;
 
     this.setEntranceDoor();
     this.setRoomDoors();
   }
 
   setEntranceDoor() {
+    this.resources.gltfLoader.load('./models/door.glb', (gltf) => {
+      this.doorModels = {
+        Body: gltf.scene.children.find((obj) => obj.name === 'Body'),
+        BackHandle: gltf.scene.children[0].children.find(
+          (obj) => obj.name === 'BackHandle',
+        ),
+        FrontHandle: gltf.scene.children[0].children.find(
+          (obj) => obj.name === 'FrontHandle',
+        ),
+        Window: gltf.scene.children[0].children.find(
+          (obj) => obj.name === 'Window',
+        ),
+        Border: gltf.scene.children.find((obj) => obj.name === 'Border'),
+      };
+
+      this.door = new THREE.Group();
+      this.door.add(this.doorModels.Body);
+      this.scene.add(this.door);
+    });
+
     this.entranceDoor = new THREE.Mesh(
       new THREE.BoxGeometry(0.5, 1, 0.1),
       new THREE.MeshBasicMaterial({ color: 0xff0000 }),
@@ -88,10 +111,10 @@ export default class Doors {
 
         // Making the doors face each other
         if (this.roomDoorSide) {
-          roomDoors.position.set(1, 0.75, (-i * 0.5 - 0.5) - this.space);
+          roomDoors.position.set(1, 0.75, -i * 0.5 - 0.5 - this.space);
           this.roomDoorSide = false;
         } else {
-          roomDoors.position.set(-1, 0.75, (-i * 0.5) - this.space);
+          roomDoors.position.set(-1, 0.75, -i * 0.5 - this.space);
           this.roomDoorSide = true;
         }
         this.doorsGroup.add(roomDoors);

@@ -11,6 +11,7 @@ export default class Camera extends THREE.EventDispatcher {
     this.tests = this.app.tests;
 
     this.EPS = 1e-5;
+    this.renderCamera = 'production';
 
     this.setInstance();
     if (this.tests.active) {
@@ -27,24 +28,40 @@ export default class Camera extends THREE.EventDispatcher {
       100,
     );
 
-    // Added a testing orthographic camera to my scene with
-    // wrong vlaues, yet did the work!
-    // this.instance = new THREE.OrthographicCamera(
-    //   -400,
-    //   400,
-    //   400,
-    //   -400,
-    //   1,
-    //   1000
-    // );
-
     this.instance.position.set(0, 0, this.EPS);
     this.instanceGroup.add(this.instance);
     this.instanceGroup.position.set(0, 0, 0);
     this.scene.add(this.instanceGroup);
   }
 
-  setTests() {}
+  setDebuggingNeeds() {
+    this.debugCamera = new THREE.PerspectiveCamera(
+      45,
+      this.sizes.width / this.sizes.height,
+      0.01,
+      100,
+    );
+    this.debugCamera.position.set(4, 4, -4);
+    this.scene.add(this.debugCamera);
+  }
+
+  setTests() {
+    this.setDebuggingNeeds();
+
+    this.tests.renderer = this.tests.gui.addFolder('Renderer');
+    this.tests.renderer
+      .add(this, 'renderCamera', {
+        DebugMode: 'debug',
+        ProMode: 'production',
+      })
+      .onChange(() => {
+        if (this.renderCamera === 'debug') {
+          this.dispatchEvent({ type: 'debug', message: 'debugging' });
+        } else {
+          this.dispatchEvent({ type: 'debug', message: null });
+        }
+      });
+  }
 
   resize() {
     this.instance.aspect = this.sizes.width / this.sizes.height;

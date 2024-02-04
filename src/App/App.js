@@ -6,6 +6,7 @@ import Logger from './Utils/Logger';
 import Tests from './Utils/Tests';
 import Sizes from './Utils/Sizes';
 import Interval from './Utils/Interval';
+import Resources from './Utils/Resources';
 
 // Three.js Configurations
 import Camera from './Config/Camera';
@@ -36,6 +37,7 @@ export default class App {
     this.tests = new Tests();
     this.sizes = new Sizes();
     this.interval = new Interval();
+    this.resources = new Resources();
 
     // Creating the Scene
     this.scene = new Scene();

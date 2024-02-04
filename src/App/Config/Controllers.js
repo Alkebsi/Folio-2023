@@ -24,15 +24,19 @@ export default class Controllers {
 
     this.setCameraControls();
 
-    this.camera.addEventListener('toggleControllers', (e) => {
-      if (e.message) {
-        this.disableScrollFunc();
-      } else {
-        this.enableScrollFunc();
-      }
-    });
-
     if (this.tests.active) {
+      this.camera.addEventListener('debug', (e) => {
+        if (e.message) {
+          this.disableScrollFunc();
+          this.setDebugControls();
+          console.log('debugging');
+        } else {
+          this.enableScrollFunc();
+          this.setCameraControls();
+          console.log('nothing');
+        }
+      });
+
       this.setTests();
     }
   }
@@ -51,6 +55,7 @@ export default class Controllers {
   }
 
   setCameraControls() {
+    console.log('setCameraControls is working now');
     this.cameraControls = new CameraControls(this.camera.instance, this.canvas);
 
     this.cameraControls.minDistance = 1;
@@ -75,6 +80,14 @@ export default class Controllers {
     this.cameraControls.saveState();
   }
 
+  setDebugControls() {
+    this.cameraControls = new CameraControls(this.camera.debugCamera, this.canvas);
+    this.cameraControls.smoothTime = 200;
+    this.cameraControls.draggingSmoothTime = 200;
+
+    this.cameraControls.saveState();
+  }
+
   disableScrollFunc() {
     this.logger.info('Scroll Functionality is disabled');
     this.scrollElement.style.display = 'none';
@@ -82,7 +95,6 @@ export default class Controllers {
 
   enableScrollFunc() {
     this.logger.info('Scroll Functionality is enabled');
-    this.camera.instanceGroup.position.set(0, 0.75, 0);
     this.scrollElement.style.display = 'block';
   }
 

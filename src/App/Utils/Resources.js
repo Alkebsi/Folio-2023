@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import App from '../App';
 
 export default class Resources {
@@ -7,17 +9,15 @@ export default class Resources {
     this.interval = this.app.interval;
     this.sizes = this.app.sizes;
 
-    this.loadingSVGContainer = document.querySelector('#circles-con');
-
-    // Update the loading paned svg view port height once loading the page
-    this.loadingSVGContainer.setAttribute(
-      'viewBox',
-      `0 0 ${this.sizes.width} ${this.sizes.height}`,
-    );
-
-    this.setLoadingScene();
+    this.setResources();
   }
 
+  setResources() {
+    this.loadingManager = new THREE.LoadingManager();
+    this.textureLoader = new THREE.TextureLoader();
+    this.gltfLoader = new GLTFLoader();
+  }
+  
   setLoadingScene() {
     // Creating a circle where clicked
     this.addCircle = () => {
