@@ -5,7 +5,8 @@
   "scripts": {
     "start": "webpack server --open --config ./bundler/webpack.server.js",
     "build": "webpack --mode production --config ./bundler/webpack.prod.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "npx prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -59,6 +60,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.0",
     "postcss": "^8.4.32",
+    "prettier": "^3.2.5",
     "semver": "^7.5.4"
   }
 }

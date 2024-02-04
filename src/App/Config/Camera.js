@@ -41,7 +41,7 @@ export default class Camera extends THREE.EventDispatcher {
       0.01,
       100,
     );
-    this.debugCamera.position.set(4, 4, -4);
+    this.debugCamera.position.set(4, 4, 4);
     this.scene.add(this.debugCamera);
   }
 
@@ -68,5 +68,6 @@ export default class Camera extends THREE.EventDispatcher {
     this.instance.updateProjectionMatrix();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   update() {}
 }

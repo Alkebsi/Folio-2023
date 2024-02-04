@@ -17,7 +17,7 @@ export default class Resources {
     this.textureLoader = new THREE.TextureLoader();
     this.gltfLoader = new GLTFLoader();
   }
-  
+
   setLoadingScene() {
     // Creating a circle where clicked
     this.addCircle = () => {
