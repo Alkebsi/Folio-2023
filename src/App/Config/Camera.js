@@ -49,6 +49,12 @@ export default class Camera extends THREE.EventDispatcher {
     this.setDebuggingNeeds();
 
     this.tests.renderer = this.tests.gui.addFolder('Renderer');
+
+    window.setTimeout(() => {
+      this.dispatchEvent({ type: 'debug', message: 'debugging' });
+      this.renderCamera = 'debug';
+    }, 100);
+
     this.tests.renderer
       .add(this, 'renderCamera', {
         DebugMode: 'debug',
@@ -66,6 +72,10 @@ export default class Camera extends THREE.EventDispatcher {
   resize() {
     this.instance.aspect = this.sizes.width / this.sizes.height;
     this.instance.updateProjectionMatrix();
+    if (this.tests.active) {
+      this.debugCamera.aspect = this.sizes.width / this.sizes.height;
+      this.debugCamera.updateProjectionMatrix();
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
