@@ -129,6 +129,7 @@ export default class Doors {
         // Making the doors face each other
         if (this.rightRoom) {
           roomDoors.position.set(1, 0, -i * 0.5 - 0.5);
+          roomDoors.scale.z = -roomDoors.scale.z;
           this.rightRoom = false;
         } else {
           roomDoors.position.set(-1, 0, -i * 0.5);
@@ -147,6 +148,7 @@ export default class Doors {
         // Making the doors face each other
         if (this.rightRoom) {
           roomDoors.position.set(1, 0, -i * 0.5 - 0.5);
+          roomDoors.scale.z = -roomDoors.scale.z;
           this.rightRoom = false;
         } else {
           roomDoors.position.set(-1, 0, -i * 0.5);
@@ -175,6 +177,7 @@ export default class Doors {
       // Making the doors face each other
       if (this.rightRoom) {
         roomDoors.position.set(1, 0, -i * 0.5 - 0.5 - this.space);
+        roomDoors.scale.z = -roomDoors.scale.z;
         this.rightRoom = false;
       } else {
         roomDoors.position.set(-1, 0, -i * 0.5 - this.space);
