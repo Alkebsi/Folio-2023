@@ -1,21 +1,43 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import App from '../App';
+import Logger from './Logger';
 
 export default class Resources {
   constructor() {
     this.app = new App();
     this.scene = this.app.scene;
     this.interval = this.app.interval;
+    this.logger = new Logger();
     this.sizes = this.app.sizes;
+
+    this.ready = false;
+    this.progress = 0;
 
     this.setResources();
   }
 
   setResources() {
-    this.loadingManager = new THREE.LoadingManager();
-    this.textureLoader = new THREE.TextureLoader();
-    this.gltfLoader = new GLTFLoader();
+    this.loadingManager = new THREE.LoadingManager(
+      () => {
+        this.logger.info('Elements Loaded');
+        this.ready = true;
+      },
+      (itemURL, loadedItems, totalItems) => {
+        this.progress = Math.round((loadedItems / totalItems) * 100);
+        this.logger.info(`Loaded ${this.progress}%`);
+      },
+      (error) => {
+        this.logger.error(`There was an error loading the models: ${error}`);
+      },
+    );
+
+    this.gltfLoader = new GLTFLoader(this.loadingManager);
+
+    // Must-have textures & images
+    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
+    // Lazy-loading textures & images
+    this.imagesLoader = new THREE.TextureLoader();
   }
 
   setLoadingScene() {

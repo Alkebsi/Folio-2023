@@ -29,11 +29,9 @@ export default class Controllers {
         if (e.message) {
           this.disableScrollFunc();
           this.setDebugControls();
-          console.log('debugging');
         } else {
           this.enableScrollFunc();
           this.setCameraControls();
-          console.log('nothing');
         }
       });
 
@@ -55,7 +53,6 @@ export default class Controllers {
   }
 
   setCameraControls() {
-    console.log('setCameraControls is working now');
     this.cameraControls = new CameraControls(this.camera.instance, this.canvas);
 
     this.cameraControls.minDistance = 1;
