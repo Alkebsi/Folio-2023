@@ -18,7 +18,6 @@ export default class Home {
       this.sizes.doorsCount + this.sizes.entranceDepth + this.sizes.fakeDoors / 2;
 
     this.setInstance();
-    this.setGround();
     if (this.tests.active) {
       this.setTests();
     }
@@ -32,28 +31,34 @@ export default class Home {
       opacity: this.universalParams.opacity,
     });
 
-    this.frontWallRightSide = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.wallsMaterial);
-    this.frontWallRightSide.position.set(1.32, 1, 0);
-    this.frontWallLeftSide = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.wallsMaterial);
-    this.frontWallLeftSide.position.set(-1.32, 1, 0);
-    this.frontWallTopSide = new THREE.Mesh(new THREE.PlaneGeometry(0.64, 0.8), this.wallsMaterial);
-    this.frontWallTopSide.position.set(0, 1.6, 0);
+    // Walls
+    this.frontWallRightSide = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 5), this.wallsMaterial);
+    this.frontWallRightSide.position.set(0.65, 2.5, 0.1);
+    this.frontWallLeftSide = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 5), this.wallsMaterial);
+    this.frontWallLeftSide.position.set(-0.65, 2.5, 0.1);
+    this.frontWallTopSide = new THREE.Mesh(new THREE.PlaneGeometry(0.60, 3.8), this.wallsMaterial);
+    this.frontWallTopSide.position.set(0, 3.1, 0.1);
+
+    this.innerRightWall = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 5), this.wallsMaterial);
+    this.innerRightWall.position.set(1, 2.5, -0.025);
+    this.innerRightWall.rotation.set(0, -Math.PI * 0.5, 0);
+
+    this.innerLeftWall = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 5), this.wallsMaterial);
+    this.innerLeftWall.position.set(-1, 2.5, -0.025);
+    this.innerLeftWall.rotation.set(0, Math.PI * 0.5, 0);
 
     this.frontWall = new THREE.Group();
     this.frontWall.add(
       this.frontWallRightSide,
       this.frontWallLeftSide,
       this.frontWallTopSide,
+      this.innerRightWall,
+      this.innerLeftWall,
     );
 
-    this.instance = new THREE.Group();
-    this.instance.add(this.frontWall);
-    this.scene.add(this.instance);
-  }
-
-  setGround() {
+    // Ground
     this.ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(4.6, 50),
+      new THREE.PlaneGeometry(2.1, 50),
       new THREE.MeshBasicMaterial({
         color: 0x000000,
       }),
@@ -62,7 +67,15 @@ export default class Home {
     this.ground.position.set(0, -0.01, -22); // to avoid z-conflect!
     this.ground.rotation.x = -Math.PI * 0.5;
 
-    this.scene.add(this.ground);
+    // Ceiling
+    this.ceiling = this.ground.clone();
+    this.ceiling.position.y = 5;
+    this.ceiling.position.z -= 2.9;
+    this.ceiling.scale.setScalar(-1);
+
+    this.instance = new THREE.Group();
+    this.instance.add(this.frontWall, this.ground, this.ceiling);
+    this.scene.add(this.instance);
   }
 
   setTests() {

@@ -10,7 +10,7 @@ export default class Renderer {
     this.scene = this.app.scene;
     this.tests = this.app.tests;
 
-    this.clearColor = '#000033';
+    this.clearColor = '#000000';
 
     this.setInstance();
     if (this.tests.active) {

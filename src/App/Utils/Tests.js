@@ -12,6 +12,7 @@ export default class Tests {
       this.statsType = 0; // 0 = fbs, click on the FPS panel for more.
 
       this.gui = new GUI();
+      this.gui.close();
       this.stats = new Stats();
 
       this.world = this.gui.addFolder('World');

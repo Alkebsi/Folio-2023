@@ -33,15 +33,16 @@ export default class Doors {
         border: gltf.scene.children.find((obj) => obj.name === 'Border'),
       };
 
-      const modelsMaterial = new THREE.MeshBasicMaterial({ color: 0x990000 });
+      const white = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+      const black = new THREE.MeshBasicMaterial({ color: 0x000000 });
 
-      this.doorModels.body.material = modelsMaterial;
-      this.doorModels.border.material = modelsMaterial;
-      this.doorModels.window.material = modelsMaterial;
-      this.doorModels.frontHandle.material = modelsMaterial;
-      this.doorModels.backHandle.material = modelsMaterial;
+      this.doorModels.body.material = white;
+      this.doorModels.border.material = black;
+      this.doorModels.window.material = black;
+      this.doorModels.frontHandle.material = black;
+      this.doorModels.backHandle.material = black;
 
-      this.doorModels.body.rotation.y = Math.PI * 0.25;
+      // this.doorModels.body.rotation.y = Math.PI * 0.25;
 
       this.door = new THREE.Group();
       this.door.add(this.doorModels.body, this.doorModels.border);
@@ -64,7 +65,7 @@ export default class Doors {
   setEntranceDoor() {
     this.entranceDoor = this.door.clone();
 
-    this.entranceDoor.position.set(0, 0, 0);
+    this.entranceDoor.position.set(0, 0, 0.1);
 
     this.scene.add(this.entranceDoor);
   }
