@@ -13,6 +13,7 @@ export default class Renderer {
     this.clearColor = '#000000';
 
     this.setInstance();
+    this.setFog();
     if (this.tests.active) {
       this.setTests();
     }
@@ -33,13 +34,34 @@ export default class Renderer {
     this.instance.setPixelRatio(this.sizes.pixelRatio);
   }
 
-  setTests() {
-    this.tests.renderer
-      .add(this.instance, 'useLegacyLights')
-      .name('LegacyLights');
+  setFog() {
+    this.fog = new THREE.Fog(this.clearColor, 5, 15);
+    if (!this.tests.active) {
+      this.scene.fog = this.fog;
+    }
+  }
 
-    this.tests.renderer.addColor(this, 'clearColor').onChange(() => {
-      this.instance.setClearColor(this.clearColor);
+  setTests() {
+    this.enableFog = false;
+    this.tests.renderer.add(this.instance, 'useLegacyLights').name('LegacyLights');
+
+    this.tests.renderer
+      .addColor(this, 'clearColor')
+      .onChange(() => {
+        this.instance.setClearColor(this.clearColor);
+        this.scene.fog.color.set(this.clearColor);
+      })
+      .name('FogColor');
+
+    this.tests.renderer.add(this.fog, 'near', 0, 50, 0.01).name('FogNear');
+    this.tests.renderer.add(this.fog, 'far', 0, 50, 0.01).name('FogFar');
+
+    this.tests.renderer.add(this, 'enableFog').onChange(() => {
+      if (this.enableFog) {
+        this.scene.fog = this.fog;
+      } else {
+        this.scene.fog = null;
+      }
     });
   }
 

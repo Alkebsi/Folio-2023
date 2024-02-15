@@ -83,7 +83,7 @@ export default class Home {
 
     // Setting the ground to transparent
     this.ground.material.transparent = true;
-    this.universalParams.transparent = true;
+    // this.universalParams.transparent = true;
 
     const updateOpacity = () => {
       this.wallsMaterial.opacity = this.universalParams.opacity;

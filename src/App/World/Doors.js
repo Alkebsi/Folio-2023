@@ -33,7 +33,7 @@ export default class Doors {
         border: gltf.scene.children.find((obj) => obj.name === 'Border'),
       };
 
-      const white = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+      const white = new THREE.MeshBasicMaterial({ color: 0xffffff });
       const black = new THREE.MeshBasicMaterial({ color: 0x000000 });
 
       this.doorModels.body.material = white;
@@ -75,26 +75,17 @@ export default class Doors {
     this.finalResult = this.sizes.doorsCount * 2;
     this.sideWall = new THREE.Group();
 
+    this.wallMaterials = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      side: THREE.DoubleSide,
+      transparent: this.universalParams.transparent,
+      opacity: this.universalParams.opacity,
+    });
+
     if (this.index > 0 && !isRight) {
       this.addMesh = (index) => {
-        this.inbetweens = new THREE.Mesh(
-          new THREE.PlaneGeometry(0.3, 5),
-          new THREE.MeshBasicMaterial({
-            color: 0x000000,
-            side: THREE.DoubleSide,
-            transparent: this.universalParams.transparent,
-            opacity: this.universalParams.opacity,
-          }),
-        );
-        this.toppings = new THREE.Mesh(
-          new THREE.PlaneGeometry(0.7, 3.85),
-          new THREE.MeshBasicMaterial({
-            color: 0x000000,
-            side: THREE.DoubleSide,
-            transparent: this.universalParams.transparent,
-            opacity: this.universalParams.opacity,
-          }),
-        );
+        this.inbetweens = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 5), this.wallMaterials);
+        this.toppings = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 3.85), this.wallMaterials);
 
         this.inbetweens.rotation.y = -Math.PI * 0.5;
         this.inbetweens.position.set(1, 2.5, -index);
@@ -192,11 +183,11 @@ export default class Doors {
     this.scene.add(this.fakeDoorsGroup);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   setTests() {
-    this.tests.doors = this.tests.world.addFolder('Doors');
-    this.universalParams.transparent = true;
-
+    // this.universalParams.transparent = true;
     /* //TODO: this did work! Find a way around the toppings and inbetweens.
+    this.tests.doors = this.tests.world.addFolder('Doors');
     this.tests.doors.add(this.universalParams, 'transparent').onChange(() => {
       this.toppings.material.transparent = this.universalParams.transparent;
     });

@@ -50,10 +50,10 @@ export default class Camera extends THREE.EventDispatcher {
 
     this.tests.renderer = this.tests.gui.addFolder('Renderer');
 
-    window.setTimeout(() => {
-      this.dispatchEvent({ type: 'debug', message: 'debugging' });
-      this.renderCamera = 'debug';
-    }, 100);
+    // window.setTimeout(() => {
+    //   this.dispatchEvent({ type: 'debug', message: 'debugging' });
+    //   this.renderCamera = 'debug';
+    // }, 100);
 
     this.tests.renderer
       .add(this, 'renderCamera', {
