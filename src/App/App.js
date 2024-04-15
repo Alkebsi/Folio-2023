@@ -7,6 +7,7 @@ import Tests from './Utils/Tests';
 import Sizes from './Utils/Sizes';
 import Interval from './Utils/Interval';
 import Resources from './Utils/Resources';
+import Raycaster from './Utils/Raycaster';
 
 // Three.js Configurations
 import Camera from './Config/Camera';
@@ -47,6 +48,9 @@ export default class App {
     this.renderer = new Renderer();
     this.world = new World();
     this.controllers = new Controllers(scrollElement);
+
+    // Calling the raycaster
+    this.raycaster = new Raycaster();
 
     // Calling Methods
     window.addEventListener('dblclick', () => {

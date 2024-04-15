@@ -177,7 +177,7 @@ export default class Doors {
       }
 
       this.setDoorWalls(i + this.doorsCount + 2, this.rightRoom);
-      this.doorsGroup.add(roomDoors);
+      this.fakeDoorsGroup.add(roomDoors);
     }
 
     this.scene.add(this.fakeDoorsGroup);
