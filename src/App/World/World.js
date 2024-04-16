@@ -10,7 +10,7 @@ export default class World {
     this.tests = this.app.tests;
 
     this.home = new Home();
-    this.doors = new Doors();
+    this.doors = new Doors(this.home.universalParams);
     // this.rooms = new Rooms();
 
     if (this.tests.active) {

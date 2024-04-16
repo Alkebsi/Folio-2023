@@ -33,7 +33,7 @@ export default class Sizes {
   setDoorsInfo() {
     this.doorsCount = 5;
     this.fakeDoors = 20;
-    this.entranceDepth = 1.5;
+    this.entranceDepth = 3;
 
     if (this.doorsCount % 2 === 1) {
       this.oddDoors = true;

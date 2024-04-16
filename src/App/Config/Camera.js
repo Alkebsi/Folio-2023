@@ -50,22 +50,24 @@ export default class Camera extends THREE.EventDispatcher {
 
     this.tests.renderer = this.tests.gui.addFolder('Renderer');
 
-    // window.setTimeout(() => {
-    //   this.dispatchEvent({ type: 'debug', message: 'debugging' });
-    //   this.renderCamera = 'debug';
-    // }, 100);
+    window.setTimeout(() => {
+      this.renderCamera = 'debug';
+      this.dispatchEvent({ type: 'camera', message: 'debug' });
+    }, 0);
 
+    // TODO: Commnet those lines once ready for production
+    const cameraTests = {
+      toggle: () => {
+        this.renderCamera = 'debug';
+        this.dispatchEvent({ type: 'camera', message: 'debug' });
+      },
+    };
     this.tests.renderer
-      .add(this, 'renderCamera', {
-        DebugMode: 'debug',
-        ProMode: 'production',
-      })
+      .add(cameraTests, 'toggle')
+      .name('DebugMode')
       .onChange(() => {
-        if (this.renderCamera === 'debug') {
-          this.dispatchEvent({ type: 'debug', message: 'debugging' });
-        } else {
-          this.dispatchEvent({ type: 'debug', message: null });
-        }
+        // TODO: Remove the dat elements once clicked
+        // this.tests.renderer.remove();
       });
   }
 

@@ -2,16 +2,16 @@
 export default class Logger {
   info(message) {
     this.msg = message;
-    console.log(this.msg);
+    console.log('Info:', this.msg);
   }
 
   warn(warning) {
     this.msg = warning;
-    console.warn(this.msg);
+    console.warn('Warnning:', this.msg);
   }
 
   error(error) {
     this.msg = error;
-    console.error(this.msg);
+    console.error('Error:', this.msg);
   }
 }

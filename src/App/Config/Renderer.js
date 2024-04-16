@@ -10,7 +10,8 @@ export default class Renderer {
     this.scene = this.app.scene;
     this.tests = this.app.tests;
 
-    this.clearColor = '#000000';
+    // TODO: Change this Debugging Colors
+    this.clearColor = '#ff0000';
 
     this.setInstance();
     this.setFog();
@@ -49,7 +50,7 @@ export default class Renderer {
       .addColor(this, 'clearColor')
       .onChange(() => {
         this.instance.setClearColor(this.clearColor);
-        this.scene.fog.color.set(this.clearColor);
+        this.fog.color.set(this.clearColor);
       })
       .name('FogColor');
 

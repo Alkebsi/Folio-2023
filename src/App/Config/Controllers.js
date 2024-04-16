@@ -25,29 +25,33 @@ export default class Controllers {
     this.setCameraControls();
 
     if (this.tests.active) {
-      this.camera.addEventListener('debug', (e) => {
-        if (e.message) {
+      this.setTests();
+
+      this.camera.addEventListener('camera', (e) => {
+        if (e.message === 'debug') {
           this.disableScrollFunc();
           this.setDebugControls();
-        } else {
+        } else if (e.message === 'production') {
           this.enableScrollFunc();
           this.setCameraControls();
+        } else {
+          this.logger.error('The camera controls was called with an unusuall properity');
         }
       });
 
-      this.setTests();
+      this.setScrollFunctionality(); // to set the camera position before scrolling!
     }
   }
 
   setScrollFunctionality() {
-    const scrollPos = -(window.scrollY / this.sizes.height);
+    this.scrollPos = -(window.scrollY / this.sizes.height);
 
     // Loop back of the doors count is reached
-    if (scrollPos <= -this.sizes.doorsCount * 0.5) {
+    if (this.scrollPos <= -this.sizes.doorsCount * 0.5) {
       window.scrollTo(0, 0);
     }
 
-    this.cameraControls.moveTo(0, 0.7, scrollPos, true);
+    this.cameraControls.moveTo(0, 0.7, this.scrollPos, true);
     // this.camera.instanceGroup.position.set(0, 0.75, scrollPos);
     // this.camera.lookAtObject.z = scrollPos - 2;
   }
@@ -68,7 +72,7 @@ export default class Controllers {
 
     this.cameraControls.mouseButtons.wheel = CameraControls.ACTION.NONE;
     this.cameraControls.touches.two = CameraControls.ACTION.NONE;
-    // this.cameraControls.truckSpeed = 10; // not needed as I manage the scrolling functionality
+    // this.cameraControls.truckSpeed = 10; // not needed as I managed the scrolling functionality
 
     this.cameraControls.smoothTime = 0; // This should not be changed!
     this.cameraControls.draggingSmoothTime = 200;
@@ -77,6 +81,7 @@ export default class Controllers {
     this.cameraControls.saveState();
   }
 
+  // TODO: Commnet those lines once ready for production
   setDebugControls() {
     this.cameraControls = new CameraControls(this.camera.debugCamera, this.canvas);
     this.cameraControls.smoothTime = 200;
@@ -100,22 +105,10 @@ export default class Controllers {
     this.tests.camCons = this.tests.controllers.addFolder('Camera');
 
     this.tests.camCons
-      .add(
-        this.cameraControls,
-        'maxAzimuthAngle',
-        -Math.PI * 2,
-        Math.PI * 2,
-        0.001,
-      )
+      .add(this.cameraControls, 'maxAzimuthAngle', -Math.PI * 2, Math.PI * 2, 0.001)
       .name('MaxAzAngle');
     this.tests.camCons
-      .add(
-        this.cameraControls,
-        'minAzimuthAngle',
-        -Math.PI * 2,
-        Math.PI * 2,
-        0.001,
-      )
+      .add(this.cameraControls, 'minAzimuthAngle', -Math.PI * 2, Math.PI * 2, 0.001)
       .name('MinAzAngle');
     this.tests.camCons
       .add(this.cameraControls, 'azimuthRotateSpeed', -1, 1, 0.001)
@@ -127,19 +120,11 @@ export default class Controllers {
     this.tests.camCons
       .add(this.cameraControls, 'minPolarAngle', -Math.PI, Math.PI, 0.001)
       .name('MinPoAngle');
-    this.tests.camCons.add(
-      this.cameraControls,
-      'polarRotateSpeed',
-      -1,
-      1,
-      0.001,
-    );
+    this.tests.camCons.add(this.cameraControls, 'polarRotateSpeed', -1, 1, 0.001);
 
     this.tests.camCons
       .add(this.cameraControls, 'draggingSmoothTime', 0, 1000, 1)
       .name('DragSmooth');
-
-    this.tests.controllers.add(this.sizes, 'doorsCount', 0, 1000, 1);
   }
 
   update() {

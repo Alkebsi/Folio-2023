@@ -11,10 +11,17 @@ export default class Doors {
     this.tests = this.app.tests;
 
     this.universalParams = {
-      opacity: 0.7,
-      transparent: false,
+      opacity: 0.5,
+      transparent: true,
     };
     this.doorModels = null;
+
+    this.wallsMaterial = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      side: THREE.DoubleSide, // since the camera will go inside the rooms
+      transparent: this.universalParams.transparent,
+      opacity: this.universalParams.opacity,
+    });
 
     this.loadDoorModel();
     this.setScene();
@@ -70,22 +77,16 @@ export default class Doors {
     this.scene.add(this.entranceDoor);
   }
 
+  // Created them here no align them with each door
   setDoorWalls(i, isRight) {
     this.index = i / 2;
     this.finalResult = this.sizes.doorsCount * 2;
     this.sideWall = new THREE.Group();
 
-    this.wallMaterials = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      side: THREE.DoubleSide,
-      transparent: this.universalParams.transparent,
-      opacity: this.universalParams.opacity,
-    });
-
     if (this.index > 0 && !isRight) {
       this.addMesh = (index) => {
-        this.inbetweens = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 5), this.wallMaterials);
-        this.toppings = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 3.85), this.wallMaterials);
+        this.inbetweens = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 5), this.wallsMaterial);
+        this.toppings = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 3.85), this.wallsMaterial);
 
         this.inbetweens.rotation.y = -Math.PI * 0.5;
         this.inbetweens.position.set(1, 2.5, -index);
@@ -185,12 +186,15 @@ export default class Doors {
 
   // eslint-disable-next-line class-methods-use-this
   setTests() {
-    // this.universalParams.transparent = true;
-    /* //TODO: this did work! Find a way around the toppings and inbetweens.
-    this.tests.doors = this.tests.world.addFolder('Doors');
-    this.tests.doors.add(this.universalParams, 'transparent').onChange(() => {
-      this.toppings.material.transparent = this.universalParams.transparent;
-    });
-    // */
+    const updateOpacity = () => {
+      this.wallsMaterial.opacity = this.universalParams.opacity;
+      // console.log(this.wallsMaterial.opacity)
+    };
+    updateOpacity();
+
+    this.tests.objectsOpacity
+      .add(this.universalParams, 'opacity', 0, 1, 0.01)
+      .name('WallsOpacity')
+      .onFinishChange(updateOpacity);
   }
 }

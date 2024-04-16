@@ -9,11 +9,11 @@ export default class Home {
     this.tests = this.app.tests;
 
     this.universalParams = {
-      opacity: 0.7,
+      opacity: 0.5,
       transparent: false,
     };
 
-    // This tells how big the home is
+    // This tells how deep the home is
     this.buildingDepth =
       this.sizes.doorsCount + this.sizes.entranceDepth + this.sizes.fakeDoors / 2;
 
@@ -36,7 +36,7 @@ export default class Home {
     this.frontWallRightSide.position.set(0.65, 2.5, 0.1);
     this.frontWallLeftSide = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 5), this.wallsMaterial);
     this.frontWallLeftSide.position.set(-0.65, 2.5, 0.1);
-    this.frontWallTopSide = new THREE.Mesh(new THREE.PlaneGeometry(0.60, 3.8), this.wallsMaterial);
+    this.frontWallTopSide = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 3.8), this.wallsMaterial);
     this.frontWallTopSide.position.set(0, 3.1, 0.1);
 
     this.innerRightWall = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 5), this.wallsMaterial);
@@ -58,24 +58,30 @@ export default class Home {
 
     // Ground
     this.ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.1, 50),
+      new THREE.PlaneGeometry(2.1, this.buildingDepth),
       new THREE.MeshBasicMaterial({
         color: 0x000000,
       }),
     );
 
-    this.ground.position.set(0, -0.01, -22); // to avoid z-conflect!
+    // The Y axis was set to -0.01 to avoid z-conflect
+    this.ground.position.set(0, -0.01, -this.buildingDepth / 2 + this.sizes.entranceDepth - 1.2);
     this.ground.rotation.x = -Math.PI * 0.5;
 
     // Ceiling
     this.ceiling = this.ground.clone();
     this.ceiling.position.y = 5;
-    this.ceiling.position.z -= 2.9;
+    this.ceiling.position.z -= this.sizes.entranceDepth - 1.3;
     this.ceiling.scale.setScalar(-1);
 
     this.instance = new THREE.Group();
     this.instance.add(this.frontWall, this.ground, this.ceiling);
     this.scene.add(this.instance);
+
+    /**
+     * Note: Door walls were created in the Doors.js
+     * file to have them aligned with each door.
+     */
   }
 
   setTests() {
@@ -83,25 +89,18 @@ export default class Home {
 
     // Setting the ground to transparent
     this.ground.material.transparent = true;
-    // this.universalParams.transparent = true;
+    this.universalParams.transparent = true;
+    this.wallsMaterial.transparent = this.universalParams.transparent;
 
     const updateOpacity = () => {
       this.wallsMaterial.opacity = this.universalParams.opacity;
       this.ground.material.opacity = this.universalParams.opacity;
-      this.wallsMaterial.transparent = this.universalParams.transparent;
-      // This didn't work for some reaseon! So, the ground's transparent is true once tests are open
-      // this.ground.material.transparent = this.universalParams.transparent;
     };
     updateOpacity();
 
     this.tests.objectsOpacity
       .add(this.universalParams, 'opacity', 0, 1, 0.01)
       .name('HomeOpacity')
-      .onFinishChange(updateOpacity);
-
-    this.tests.objectsOpacity
-      .add(this.universalParams, 'transparent')
-      .name('HomeTransparency')
       .onFinishChange(updateOpacity);
   }
 }
