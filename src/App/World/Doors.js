@@ -12,7 +12,7 @@ export default class Doors {
 
     this.universalParams = {
       opacity: 0.5,
-      transparent: true,
+      transparent: false,
     };
     this.doorModels = null;
 
@@ -112,7 +112,7 @@ export default class Doors {
   setRoomDoors() {
     this.doorsGroup = new THREE.Group();
     this.doorsCount = this.sizes.doorsCount * 2 + 2;
-    this.rightRoom = true; // true = the room is in the right
+    this.rightRoom = true; // true = the room is on the right side
 
     if (!this.sizes.oddDoors) {
       for (let i = 0; i < this.doorsCount; i += 1) {
@@ -186,6 +186,9 @@ export default class Doors {
 
   // eslint-disable-next-line class-methods-use-this
   setTests() {
+    this.universalParams.transparent = true;
+    this.wallsMaterial.transparent = this.universalParams.transparent;
+
     const updateOpacity = () => {
       this.wallsMaterial.opacity = this.universalParams.opacity;
       // console.log(this.wallsMaterial.opacity)

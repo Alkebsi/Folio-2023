@@ -49,13 +49,14 @@ export default class App {
     this.world = new World();
     this.controllers = new Controllers(scrollElement);
 
-    // Calling the raycaster
+    // Calling the raycaster after everything is ready
     this.raycaster = new Raycaster();
 
     // Calling Methods
-    window.addEventListener('dblclick', () => {
-      this.sizes.fullScreen();
-    });
+    // window.addEventListener('dblclick', () => {
+    //   this.sizes.fullScreen();
+    // });
+
     window.addEventListener('resize', () => {
       this.resize();
     });
@@ -88,13 +89,15 @@ export default class App {
       this.world.update();
       this.renderer.update(); // Not in need if passes are being used.
       this.controllers.update();
+      this.raycaster.update();
       this.tests.stats.end();
     } else {
       this.interval.update();
       this.camera.update();
       this.world.update();
-      this.controllers.update();
       this.renderer.update(); // Not in need if passes are being used.
+      this.controllers.update();
+      this.raycaster.update();
     }
 
     requestAnimationFrame(() => {

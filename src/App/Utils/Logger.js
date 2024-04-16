@@ -2,7 +2,7 @@
 export default class Logger {
   info(message) {
     this.msg = message;
-    console.log('Info:', this.msg);
+    // console.log('Info:', this.msg); // got annoying!
   }
 
   warn(warning) {
