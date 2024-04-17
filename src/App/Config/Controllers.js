@@ -14,9 +14,13 @@ export default class Controllers {
     this.sizes = this.app.sizes;
     this.tests = this.app.tests;
 
+    // TODO: Not being used anymore! Optimize the thing and remove this one
     this.scrollElement = scrollElement;
     this.isClicking = false;
     this.drag = { x: 0, y: 0 };
+
+    // Controllers animation smooth time
+    this.animationTime = 800;
 
     window.addEventListener('scroll', () => {
       this.setScrollFunctionality();
@@ -59,8 +63,8 @@ export default class Controllers {
   setCameraControls() {
     this.cameraControls = new CameraControls(this.camera.instance, this.canvas);
 
-    this.cameraControls.minDistance = 1;
-    this.cameraControls.maxDistance = 1;
+    // this.cameraControls.minDistance = 1;
+    // this.cameraControls.maxDistance = 1;
 
     this.cameraControls.maxAzimuthAngle = Math.PI * 0.25;
     this.cameraControls.minAzimuthAngle = -Math.PI * 0.25;
@@ -74,7 +78,7 @@ export default class Controllers {
     this.cameraControls.touches.two = CameraControls.ACTION.NONE;
     // this.cameraControls.truckSpeed = 10; // not needed as I managed the scrolling functionality
 
-    this.cameraControls.smoothTime = 0; // This should not be changed!
+    this.cameraControls.smoothTime = 0; // Be careful when changing this as it will ruin the loop
     this.cameraControls.draggingSmoothTime = 200;
 
     this.cameraControls.moveTo(0, 0.7, 3, true);
@@ -91,13 +95,93 @@ export default class Controllers {
   }
 
   disableScrollFunc() {
-    this.logger.info('Scroll Functionality is disabled');
-    this.scrollElement.style.display = 'none';
+    this.logger.info('Scroll functionality is disabled');
+    this.cameraControls.mouseButtons.wheel = null;
+    this.cameraControls.mouseButtons.left = null;
+    this.cameraControls.touches.one = null;
   }
 
-  enableScrollFunc() {
-    this.logger.info('Scroll Functionality is enabled');
-    this.scrollElement.style.display = 'block';
+  enableScrollFunc(scrollable) {
+    this.logger.info('Scroll functionality is enabled');
+    this.cameraControls.smoothTime = this.animationTime;
+
+    if (scrollable) {
+      this.cameraControls.mouseButtons.wheel = CameraControls.ACTION.NONE;
+    }
+    this.cameraControls.mouseButtons.left = CameraControls.ACTION.ROTATE;
+    this.cameraControls.touches.one = CameraControls.ACTION.ROTATE;
+  }
+
+  // This funcitons is triggered from the raycaster class
+  clicked(door) {
+    this.clickedDoor = door;
+    this.disableScrollFunc();
+
+    // Animate to the room, then
+    this.cameraControls.smoothTime = 200;
+    this.setRoomEntranceAnimation();
+
+    window.setTimeout(() => {
+      this.setRoomStyleCameraControls();
+    }, 2000);
+  }
+
+  setRoomEntranceAnimation() {
+    // Just incase!
+    if (!this.cameraControls) {
+      this.logger.error('Called camera_to_the_room animation without setting the controls first!');
+    }
+
+    // Look at the doors
+    this.cameraControls.setLookAt(
+      // Camera Position
+      -this.clickedDoor.parent.position.x / 1.1,
+      0.7,
+      this.clickedDoor.parent.position.z,
+
+      // Target
+      this.clickedDoor.parent.position.x / 1000,
+      0.7,
+      this.clickedDoor.parent.position.z,
+
+      // enableTransitions
+      true,
+    );
+
+    // Enter the room
+    window.setTimeout(() => {
+      this.cameraControls.setLookAt(
+        // Camera Position
+        -this.clickedDoor.parent.position.x * -2,
+        0.7,
+        this.clickedDoor.parent.position.z,
+
+        // Target
+        -this.clickedDoor.parent.position.x * -2.01,
+        0.7,
+        this.clickedDoor.parent.position.z,
+
+        // enableTransitions
+        true,
+      );
+    }, 2000 + this.animationTime);
+  }
+
+  // Triggered once the user enters a room
+  setRoomStyleCameraControls() {
+    // Just incase!
+    if (!this.cameraControls) {
+      this.logger.error('Called the room camera controls without setting the controls first!');
+    }
+
+    // First thing to do, enable the controls
+    this.enableScrollFunc(false);
+
+    this.cameraControls.minAzimuthAngle = -Infinity;
+    this.cameraControls.maxAzimuthAngle = Infinity;
+
+    this.cameraControls.maxPolarAngle = Math.PI;
+    this.cameraControls.minPolarAngle = -Math.PI;
   }
 
   setTests() {

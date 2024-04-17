@@ -6,6 +6,7 @@ export default class Raycaster {
     this.app = new App();
     this.camera = this.app.camera;
     this.sizes = this.app.sizes;
+    this.controllers = this.app.controllers;
     this.doors = this.app.world.doors;
     this.resources = this.app.resources;
 
@@ -20,11 +21,16 @@ export default class Raycaster {
     // TODO: Change it so that it only works when the user clicks
     // Not on right click or dblclick? Make sure of the camera controls!
     // They were the ones causing this issue since the beginning
-    window.addEventListener('contextmenu', () => {
+    const clicking = () => {
       if (this.door) {
-        this.door.rotation.y = Math.PI * 0.5;
+        this.doors.clicked(this.door);
+        this.controllers.clicked(this.door);
+
+        // Delete the event listener to pervent multiable clicks
+        // window.removeEventListener('contextmenu', clicking);
       }
-    });
+    };
+    window.addEventListener('contextmenu', clicking);
   }
 
   setIntersections() {

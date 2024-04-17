@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap, { Power2 } from 'gsap';
 import App from '../App';
 
 export default class Doors {
@@ -114,6 +115,10 @@ export default class Doors {
 
     for (let i = 0; i < this.doorsCount; i += 1) {
       const roomDoors = this.door.clone();
+      roomDoors.children[0].userData.doorNumber = i;
+      roomDoors.name = `doorNo_${i}`;
+      // console.log(roomDoors);
+
       roomDoors.rotation.y = Math.PI * 0.5;
 
       // Making the doors face each other
@@ -161,7 +166,33 @@ export default class Doors {
     this.scene.add(this.fakeDoorsGroup);
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  // This funcitons is triggered from the raycaster class
+  clicked(door) {
+    this.clickedDoor = door;
+    gsap.to(this.clickedDoor.rotation, {
+      ease: Power2.easeInOut,
+      delay: 1,
+      duration: 2,
+      y: Math.PI / 2,
+    });
+    gsap.to(this.clickedDoor.rotation, {
+      ease: Power2.easeInOut,
+      delay: 4,
+      duration: 1,
+      y: 0,
+    });
+
+    // Move every other door to Valhalla
+    this.everyOthreDoor = this.clickedDoor.parent.parent.children.filter(
+      (child) => child.uuid !== this.clickedDoor.parent.uuid,
+    );
+
+    // Doors to the right of the one clicked
+    this.rightSideDoors = this.clickedDoor.parent.parent.children.filter(
+      (child) => child.uuid !== this.clickedDoor.parent.uuid,
+    );
+  }
+
   setTests() {
     this.universalParams.transparent = true;
     this.wallsMaterial.transparent = this.universalParams.transparent;
