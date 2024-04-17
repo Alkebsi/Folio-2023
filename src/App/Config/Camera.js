@@ -25,7 +25,7 @@ export default class Camera extends THREE.EventDispatcher {
       45,
       this.sizes.width / this.sizes.height,
       0.01,
-      100,
+      1000,
     );
 
     this.instance.position.set(0, 0, this.EPS);
@@ -43,6 +43,9 @@ export default class Camera extends THREE.EventDispatcher {
     );
     this.debugCamera.position.set(4, 4, 4);
     this.scene.add(this.debugCamera);
+
+    this.mainCameraHelper = new THREE.CameraHelper(this.instance);
+    this.scene.add(this.mainCameraHelper);
   }
 
   setTests() {

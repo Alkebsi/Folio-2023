@@ -87,9 +87,9 @@ export default class Home {
   setTests() {
     this.tests.objectsOpacity = this.tests.world.addFolder('ObjectsOpacity');
 
-    // Setting the ground to transparent
-    this.ground.material.transparent = true;
+    // Setting the materials to transparent
     this.universalParams.transparent = true;
+    this.ground.material.transparent = this.universalParams.transparent;
     this.wallsMaterial.transparent = this.universalParams.transparent;
 
     const updateOpacity = () => {

@@ -49,8 +49,6 @@ export default class Doors {
       this.doorModels.frontHandle.material = black;
       this.doorModels.backHandle.material = black;
 
-      // this.doorModels.body.rotation.y = Math.PI * 0.25;
-
       this.door = new THREE.Group();
       this.door.add(this.doorModels.body, this.doorModels.border);
       this.door.position.set(0, 0.25, 0);
@@ -114,45 +112,24 @@ export default class Doors {
     this.doorsCount = this.sizes.doorsCount * 2 + 2;
     this.rightRoom = true; // true = the room is on the right side
 
-    if (!this.sizes.oddDoors) {
-      for (let i = 0; i < this.doorsCount; i += 1) {
-        const roomDoors = this.door.clone();
-        roomDoors.rotation.y = Math.PI * 0.5;
+    for (let i = 0; i < this.doorsCount; i += 1) {
+      const roomDoors = this.door.clone();
+      roomDoors.rotation.y = Math.PI * 0.5;
 
-        // Making the doors face each other
-        if (this.rightRoom) {
-          roomDoors.position.set(1, 0, -i * 0.5 - 0.5);
-          roomDoors.scale.z = -roomDoors.scale.z;
-          this.rightRoom = false;
-        } else {
-          roomDoors.position.set(-1, 0, -i * 0.5);
-          this.rightRoom = true;
-        }
-
-        this.setDoorWalls(i, this.rightRoom);
-        this.doorsGroup.add(roomDoors);
+      // Making the doors face each other
+      if (this.rightRoom) {
+        roomDoors.position.set(1, 0, -i * 0.5 - 0.5);
+        roomDoors.scale.z = -roomDoors.scale.z;
+        this.rightRoom = false;
+      } else {
+        roomDoors.position.set(-1, 0, -i * 0.5);
+        this.rightRoom = true;
       }
-      this.scene.add(this.doorsGroup);
-    } else {
-      for (let i = 0; i < this.doorsCount; i += 1) {
-        const roomDoors = this.door.clone();
-        roomDoors.rotation.y = Math.PI * 0.5;
 
-        // Making the doors face each other
-        if (this.rightRoom) {
-          roomDoors.position.set(1, 0, -i * 0.5 - 0.5);
-          roomDoors.scale.z = -roomDoors.scale.z;
-          this.rightRoom = false;
-        } else {
-          roomDoors.position.set(-1, 0, -i * 0.5);
-          this.rightRoom = true;
-        }
-
-        this.setDoorWalls(i, this.rightRoom);
-        this.doorsGroup.add(roomDoors);
-      }
-      this.scene.add(this.doorsGroup);
+      this.setDoorWalls(i, this.rightRoom);
+      this.doorsGroup.add(roomDoors);
     }
+    this.scene.add(this.doorsGroup);
 
     // Once things are done, create fake doors
     this.setFakeDoors();
