@@ -116,7 +116,7 @@ export default class Doors {
     for (let i = 0; i < this.doorsCount; i += 1) {
       const roomDoors = this.door.clone();
       roomDoors.children[0].userData.doorNumber = i;
-      roomDoors.name = `doorNo_${i}`;
+      roomDoors.userData.doorNumber = i;
       // console.log(roomDoors);
 
       roomDoors.rotation.y = Math.PI * 0.5;
@@ -182,15 +182,63 @@ export default class Doors {
       y: 0,
     });
 
-    // Move every other door to Valhalla
-    this.everyOthreDoor = this.clickedDoor.parent.parent.children.filter(
-      (child) => child.uuid !== this.clickedDoor.parent.uuid,
+    /**
+     * Move every other door to Valhalla
+     */
+
+    // Doors to one side of the one clicked
+    this.rightSideDoors = this.clickedDoor.parent.parent.children.filter(
+      (child) => child.userData.doorNumber > this.clickedDoor.userData.doorNumber,
     );
 
-    // Doors to the right of the one clicked
-    this.rightSideDoors = this.clickedDoor.parent.parent.children.filter(
-      (child) => child.uuid !== this.clickedDoor.parent.uuid,
+    // Doors to the other side of the one clicked
+    this.leftSideDoors = this.clickedDoor.parent.parent.children.filter(
+      (child) => child.userData.doorNumber < this.clickedDoor.userData.doorNumber,
     );
+
+    // Animating the doors closer to the enterance
+    for (let i = 0; i < this.leftSideDoors.length; i += 1) {
+      gsap.to(this.leftSideDoors[i].position, {
+        z: '+=5',
+        duration: 2,
+        ease: Power2,
+      });
+
+      // Bring them back after few seconds
+      gsap.to(this.leftSideDoors[i].position, {
+        z: '-=5',
+        duration: 0,
+        delay: 3,
+      });
+    }
+
+    // Animating the doors ahead of the enterance
+    for (let i = 0; i < this.rightSideDoors.length; i += 1) {
+      gsap.to(this.rightSideDoors[i].position, {
+        z: '-=5',
+        duration: 2,
+        ease: Power2,
+      });
+
+      // Every fake door will move here
+      gsap.to(this.fakeDoorsGroup.position, {
+        z: -5,
+        duration: 2,
+        ease: Power2,
+      });
+
+      // Bring them back after few seconds
+      gsap.to(this.rightSideDoors[i].position, {
+        z: '+=5',
+        duration: 0,
+        delay: 3,
+      });
+      gsap.to(this.fakeDoorsGroup.position, {
+        z: 0,
+        duration: 0,
+        delay: 3,
+      });
+    }
   }
 
   setTests() {

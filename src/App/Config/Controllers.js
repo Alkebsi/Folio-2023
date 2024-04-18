@@ -19,6 +19,9 @@ export default class Controllers {
     this.isClicking = false;
     this.drag = { x: 0, y: 0 };
 
+    // How deep will the user enter in the rooms
+    this.entranceDepth = 3;
+
     // Controllers animation smooth time
     this.animationTime = 800;
 
@@ -152,19 +155,19 @@ export default class Controllers {
     window.setTimeout(() => {
       this.cameraControls.setLookAt(
         // Camera Position
-        -this.clickedDoor.parent.position.x * -2,
+        -this.clickedDoor.parent.position.x * -this.entranceDepth,
         0.7,
         this.clickedDoor.parent.position.z,
 
         // Target
-        -this.clickedDoor.parent.position.x * -2.01,
+        -this.clickedDoor.parent.position.x * -(this.entranceDepth + 0.01),
         0.7,
         this.clickedDoor.parent.position.z,
 
         // enableTransitions
         true,
       );
-    }, 2000 + this.animationTime);
+    }, 1300 + this.animationTime);
   }
 
   // Triggered once the user enters a room
