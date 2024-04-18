@@ -25,6 +25,12 @@ export default class Controllers {
     // Controllers animation smooth time
     this.animationTime = 800;
 
+    // Tells what type of camera controllers is active
+    this.isRoomsControls = false;
+
+    // Variables upon resize
+    this.resize();
+
     window.addEventListener('scroll', () => {
       this.setScrollFunctionality();
     });
@@ -69,8 +75,8 @@ export default class Controllers {
     // this.cameraControls.minDistance = 1;
     // this.cameraControls.maxDistance = 1;
 
-    this.cameraControls.maxAzimuthAngle = Math.PI * 0.25;
-    this.cameraControls.minAzimuthAngle = -Math.PI * 0.25;
+    this.cameraControls.maxAzimuthAngle = this.maxAzimuthAngle;
+    this.cameraControls.minAzimuthAngle = this.minAzimuthAngle;
     this.cameraControls.azimuthRotateSpeed = -0.1; // negative value to invert rotation direction
 
     this.cameraControls.maxPolarAngle = Math.PI * 0.625;
@@ -177,6 +183,8 @@ export default class Controllers {
       this.logger.error('Called the room camera controls without setting the controls first!');
     }
 
+    this.isRoomsControls = true;
+
     // First thing to do, enable the controls
     this.enableScrollFunc(false);
 
@@ -212,6 +220,38 @@ export default class Controllers {
     this.tests.camCons
       .add(this.cameraControls, 'draggingSmoothTime', 0, 1000, 1)
       .name('DragSmooth');
+  }
+
+  resize() {
+    /**
+     * Note: TODO: This is going to create many bugs once the user goes
+     * back to the hall to view other rooms. So, better you check it often
+     * and delete this comment once things are fine
+     */
+    if (this.sizes.isPortrait) {
+      this.maxAzimuthAngle = Math.PI * 0.25;
+      this.minAzimuthAngle = -Math.PI * 0.25;
+
+      if (!this.isRoomsControls && this.cameraControls) {
+        this.cameraControls.maxAzimuthAngle = this.maxAzimuthAngle;
+        this.cameraControls.minAzimuthAngle = this.minAzimuthAngle;
+      } else if (this.isRoomsControls && this.cameraControls) {
+        // console.log('You changed to portrait mode while you are inside a room');
+      } else {
+        // console.log('Called for the first time and set the min and max azurize!!!');
+      }
+    } else {
+      this.maxAzimuthAngle = Math.PI * 0.2;
+      this.minAzimuthAngle = -Math.PI * 0.2;
+      if (!this.isRoomsControls && this.cameraControls) {
+        this.cameraControls.maxAzimuthAngle = this.maxAzimuthAngle;
+        this.cameraControls.minAzimuthAngle = this.minAzimuthAngle;
+      } else if (this.isRoomsControls && this.cameraControls) {
+        // console.log('You changed to landscape mode while you are inside a room');
+      } else {
+        // console.log('Called for the first time and set the min and max azurize!!!');
+      }
+    }
   }
 
   update() {

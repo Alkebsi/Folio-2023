@@ -78,6 +78,7 @@ export default class App {
     this.camera.resize();
     this.renderer.resize(); // This line is a must
     this.world.resize();
+    this.controllers.resize();
   }
 
   // Called every frame (60fps)

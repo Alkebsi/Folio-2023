@@ -10,6 +10,7 @@ export default class Sizes {
     this.setDoorsInfo();
     this.getCursorLocation();
     this.getMobileOrentation();
+    this.checkMobile();
   }
 
   setSizes() {
@@ -20,6 +21,7 @@ export default class Sizes {
 
   resize() {
     this.setSizes();
+    this.checkMobile();
   }
 
   fullScreen() {
@@ -40,9 +42,7 @@ export default class Sizes {
     } else if (this.doorsCount % 2 === 0) {
       this.oddDoors = false;
     } else {
-      this.logger.error(
-        `The doors count is not set appropriately: ${this.doorsCount}`,
-      );
+      this.logger.error(`The doors count is not set appropriately: ${this.doorsCount}`);
     }
   }
 
@@ -72,5 +72,15 @@ export default class Sizes {
       // The alpha (gyro.z) is not usable
       // this.gyro.z = event.alpha;
     });
+  }
+
+  checkMobile() {
+    // Checking if the screen is long or wide
+    this.isPortrait = false;
+    if (this.width < this.height) {
+      this.isPortrait = true;
+    } else {
+      this.isPortrait = false;
+    }
   }
 }
