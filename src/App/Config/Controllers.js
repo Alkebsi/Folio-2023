@@ -31,6 +31,18 @@ export default class Controllers {
     // Variables upon resize
     this.resize();
 
+    /**
+     * Note: Use this one to lock the pointer and you will
+     * still have the movementX and movmentY of the cursor
+     * to do a custom one. All in all, so it once ready
+     * for the cursor and make sure to animate the cursor
+     * element accourding to the movementX/Y not clientX/Y!
+     */
+    // Using pointer lock to have the user rotate freely
+    // window.addEventListener('mousedown', () => {
+    //   this.canvas.requestPointerLock();
+    // });
+
     window.addEventListener('scroll', () => {
       this.setScrollFunctionality();
     });
