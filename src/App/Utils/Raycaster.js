@@ -34,7 +34,7 @@ export default class Raycaster {
   }
 
   setIntersections() {
-    if (this.resources.ready) {
+    if (this.resources.ready && this.camera.renderCamera !== 'debug') {
       this.intersections = this.instance.intersectObjects(this.doors.doorsGroup.children);
 
       if (
