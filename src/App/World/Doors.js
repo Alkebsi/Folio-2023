@@ -25,6 +25,7 @@ export default class Doors {
     });
 
     this.loadDoorModel();
+    this.setBlocker();
     this.setScene();
     if (this.tests.active) {
       this.setTests();
@@ -239,6 +240,46 @@ export default class Doors {
         delay: 3,
       });
     }
+
+    // Setting the blocker in place without any animations
+    this.blocker.position.y = 0;
+    this.blocker.position.z = this.clickedDoor.parent.position.z;
+    window.setTimeout(() => {
+      this.blocker.position.y = -10;
+    }, 2500);
+  }
+
+  // Blocking other doors once one is clicked
+  setBlocker() {
+    const geometryA = new THREE.PlaneGeometry(5, 1.5);
+    const geometryB = new THREE.PlaneGeometry(5, 1.5);
+    const meshA = new THREE.Mesh(geometryA, this.wallsMaterial);
+    const meshB = new THREE.Mesh(geometryB, this.wallsMaterial);
+
+    meshA.position.set(2.9, 0.5, 0);
+    meshB.position.set(-2.9, 0.5, 0);
+
+    const blockerWidth = 2.1;
+
+    const front = new THREE.Group();
+    const back = new THREE.Group();
+    this.blocker = new THREE.Group();
+
+    front.add(meshA);
+    front.add(meshB);
+
+    back.add(meshA.clone());
+    back.add(meshB.clone());
+
+    back.position.set(0, 0, -blockerWidth);
+
+    this.blocker.add(front);
+    this.blocker.add(back);
+
+    this.blocker.rotation.y = Math.PI / 2;
+    this.blocker.position.set(blockerWidth / 2, -10, 0);
+
+    this.scene.add(this.blocker);
   }
 
   setTests() {
@@ -247,7 +288,6 @@ export default class Doors {
 
     const updateOpacity = () => {
       this.wallsMaterial.opacity = this.universalParams.opacity;
-      // console.log(this.wallsMaterial.opacity)
     };
     updateOpacity();
 
