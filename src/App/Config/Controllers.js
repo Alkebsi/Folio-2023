@@ -43,9 +43,24 @@ export default class Controllers {
     //   this.canvas.requestPointerLock();
     // });
 
+    // To pervent the user from scrolling back
+    this.oldScrollPosition = 0;
     window.addEventListener('scroll', () => {
-      this.setScrollFunctionality();
+      if (this.oldScrollPosition < window.scrollY) {
+        this.setScrollFunctionality();
+        this.oldScrollPosition = window.scrollY;
+      } else {
+        window.scrollTo(0, this.oldScrollPosition);
+      }
     });
+
+    // In times of a reload, the user should be at the start
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.setTimeout(() => {
+      window.scrollTo(0, 0); // once the user reloads the page
+    }, 1);
 
     this.setCameraControls();
 
