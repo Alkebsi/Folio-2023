@@ -186,6 +186,24 @@ export default class Controllers {
         true,
       );
     }, 1300 + this.animationTime);
+
+    // Go right in front of the entrance door
+    window.setTimeout(() => {
+      this.cameraControls.setLookAt(
+        // Camera Position
+        0,
+        0.7,
+        3,
+
+        // Target
+        0,
+        0.7,
+        3.01,
+
+        // enableTransitions
+        false,
+      );
+    }, 2400 + this.animationTime);
   }
 
   // Triggered once the user enters a room
