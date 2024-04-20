@@ -167,7 +167,7 @@ export default class Doors {
     this.scene.add(this.fakeDoorsGroup);
   }
 
-  // This funcitons is triggered from the raycaster class
+  // This funciton is triggered from the raycaster class
   clicked(door) {
     this.clickedDoor = door;
     gsap.to(this.clickedDoor.rotation, {
@@ -221,25 +221,25 @@ export default class Doors {
         ease: Power2,
       });
 
-      // Every fake door will move here
-      gsap.to(this.fakeDoorsGroup.position, {
-        z: -5,
-        duration: 2,
-        ease: Power2,
-      });
-
       // Bring them back after few seconds
       gsap.to(this.rightSideDoors[i].position, {
         z: '+=5',
         duration: 0,
         delay: 3,
       });
-      gsap.to(this.fakeDoorsGroup.position, {
-        z: 0,
-        duration: 0,
-        delay: 3,
-      });
     }
+
+    // Every fake door will move here
+    gsap.to(this.fakeDoorsGroup.position, {
+      z: -5,
+      duration: 2,
+      ease: Power2,
+    });
+    gsap.to(this.fakeDoorsGroup.position, {
+      z: 0,
+      duration: 0,
+      delay: 3,
+    });
 
     // Setting the blocker in place without any animations
     this.blocker.position.y = 0;
