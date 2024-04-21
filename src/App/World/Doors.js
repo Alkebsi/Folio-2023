@@ -27,6 +27,7 @@ export default class Doors {
     this.loadDoorModel();
     this.setBlocker();
     this.setScene();
+    this.setDoorWalls();
     if (this.tests.active) {
       this.setTests();
     }
@@ -78,35 +79,83 @@ export default class Doors {
   }
 
   // Created them here no align them with each door
-  setDoorWalls(i, isRight) {
-    this.index = i / 2;
-    this.finalResult = this.sizes.doorsCount * 2;
-    this.sideWall = new THREE.Group();
+  setDoorWalls() {
+    this.wallsInfo = {
+      count: this.sizes.doorsCount + this.sizes.fakeDoors / 2,
+    };
 
-    if (this.index > 0 && !isRight) {
-      this.addMesh = (index) => {
-        this.inbetweens = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 5), this.wallsMaterial);
-        this.toppings = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 3.85), this.wallsMaterial);
+    const inbetweensOffset = new THREE.Vector3(0, 2.5, 0);
+    const toppingsOffset = new THREE.Vector3(0, 3.075, 0);
+    const inbetweensMatrix = new THREE.Matrix4();
+    const toppingsMatrix = new THREE.Matrix4();
+    // TODO: This is not rotated perfectly, fix it since it is creating artifacts!!!
+    const orientation = new THREE.Quaternion(0, 0.7);
+    const scale = new THREE.Vector3(1, 1, 1);
 
-        this.inbetweens.rotation.y = -Math.PI * 0.5;
-        this.inbetweens.position.set(1, 2.5, -index);
+    const inbetweensGeometry = new THREE.PlaneGeometry(0.3, 5);
+    const toppingsGeometry = new THREE.PlaneGeometry(0.7, 3.85);
 
-        this.toppings.rotation.y = -Math.PI * 0.5;
-        this.toppings.position.set(1, 3.075, -index + 0.5);
+    this.inbetweens = new THREE.InstancedMesh(
+      inbetweensGeometry,
+      this.wallsMaterial,
+      this.wallsInfo.count * 2,
+    );
 
-        this.sideWall.add(this.inbetweens, this.toppings);
-      };
-      this.addMesh(this.index);
+    this.toppings = new THREE.InstancedMesh(
+      toppingsGeometry,
+      this.wallsMaterial,
+      this.wallsInfo.count * 2,
+    );
 
-      if (this.finalResult === i) {
-        this.addMesh(this.index + 1);
+    // Looping through instances
+    for (let i = 0; i < this.wallsInfo.count * 2; i += 1) {
+      if (i < this.wallsInfo.count) {
+        inbetweensOffset.z = -i - 1;
+        inbetweensOffset.x = 1;
+
+        toppingsOffset.z = -i - 1 + 0.5;
+        toppingsOffset.x = 1;
+      } else {
+        inbetweensOffset.z = this.wallsInfo.count - i - 1;
+        inbetweensOffset.x = -1;
+
+        toppingsOffset.z = this.wallsInfo.count - i - 1 + 0.5;
+        toppingsOffset.x = -1;
       }
+
+      inbetweensMatrix.compose(inbetweensOffset, orientation, scale);
+      toppingsMatrix.compose(toppingsOffset, orientation, scale);
+
+      this.inbetweens.setMatrixAt(i, inbetweensMatrix);
+      this.toppings.setMatrixAt(i, toppingsMatrix);
     }
 
-    this.leftSideWalls = this.sideWall.clone();
-    this.leftSideWalls.position.set(-2, 0, 0);
+    this.scene.add(this.inbetweens, this.toppings);
 
-    this.scene.add(this.sideWall, this.leftSideWalls);
+    // if (this.index > 0 && !isRight) {
+    //   this.addMesh = (index) => {
+    //     this.inbetweens = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 5), this.wallsMaterial);
+    //     this.toppings = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 3.85), this.wallsMaterial);
+
+    //     this.inbetweens.rotation.y = -Math.PI * 0.5;
+    //     this.inbetweens.position.set(1, 2.5, -index);
+
+    //     this.toppings.rotation.y = -Math.PI * 0.5;
+    //     this.toppings.position.set(1, 3.075, -index + 0.5);
+
+    //     this.sideWall.add(this.inbetweens, this.toppings);
+    //   };
+    //   this.addMesh(this.index);
+
+    //   if (this.finalResult === i) {
+    //     this.addMesh(this.index + 1);
+    //   }
+    // }
+
+    // this.leftSideWalls = this.sideWall.clone();
+    // this.leftSideWalls.position.set(-2, 0, 0);
+
+    // this.scene.add(this.sideWall, this.leftSideWalls);
   }
 
   setRoomDoors() {
@@ -132,7 +181,6 @@ export default class Doors {
         this.rightRoom = true;
       }
 
-      this.setDoorWalls(i, this.rightRoom);
       this.doorsGroup.add(roomDoors);
     }
     this.scene.add(this.doorsGroup);
@@ -160,7 +208,7 @@ export default class Doors {
         this.rightRoom = true;
       }
 
-      this.setDoorWalls(i + this.doorsCount + 2, this.rightRoom);
+      // this.setDoorWalls(i + this.doorsCount + 2, this.rightRoom);
       this.fakeDoorsGroup.add(roomDoors);
     }
 
@@ -246,7 +294,7 @@ export default class Doors {
     this.blocker.position.z = this.clickedDoor.parent.position.z;
     window.setTimeout(() => {
       this.blocker.position.y = -10;
-    }, 2500);
+    }, 3000);
   }
 
   // Blocking other doors once one is clicked
