@@ -27,7 +27,7 @@ export default class Raycaster {
         this.controllers.clicked(this.door);
 
         // Delete the event listener to pervent multiable clicks
-        // window.removeEventListener('contextmenu', clicking);
+        window.removeEventListener('contextmenu', clicking);
       }
     };
     window.addEventListener('contextmenu', clicking);

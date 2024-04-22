@@ -29,8 +29,8 @@ Personal Portfolio:
  [-] Work on the loading scene, music, sound FX, SEO, and every other needed element
 
 BUGS!!!
+ [x] Left clicking in between animations activates TRUCKING!!!
  [-] Once you enter a room, if the space button is pressed, the user can scroll front and back, right in the loop!!!
- [-] Left clicking in between animations activates TRUCKING!!!
  [-] Touch haven't been tested. For sure, there will be many functionall problems
 
 Note needed now:-

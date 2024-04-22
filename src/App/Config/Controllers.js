@@ -134,6 +134,7 @@ export default class Controllers {
     this.logger.info('Scroll functionality is disabled');
     this.cameraControls.mouseButtons.wheel = null;
     this.cameraControls.mouseButtons.left = null;
+    this.cameraControls.mouseButtons.right = null;
     this.cameraControls.touches.one = null;
   }
 
@@ -145,6 +146,7 @@ export default class Controllers {
       this.cameraControls.mouseButtons.wheel = CameraControls.ACTION.NONE;
     }
     this.cameraControls.mouseButtons.left = CameraControls.ACTION.ROTATE;
+    this.cameraControls.mouseButtons.right = null; // forever stoping the user from trucking
     this.cameraControls.touches.one = CameraControls.ACTION.ROTATE;
   }
 
