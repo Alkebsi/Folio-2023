@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import App from '../App';
 
 export default class Home {
@@ -32,51 +33,54 @@ export default class Home {
     });
 
     // Walls
-    this.frontWallRightSide = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 5), this.wallsMaterial);
-    this.frontWallRightSide.position.set(0.65, 2.5, 0.1);
-    this.frontWallLeftSide = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 5), this.wallsMaterial);
-    this.frontWallLeftSide.position.set(-0.65, 2.5, 0.1);
-    this.frontWallTopSide = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 3.8), this.wallsMaterial);
-    this.frontWallTopSide.position.set(0, 3.1, 0.1);
+    const frontRightWall = new THREE.PlaneGeometry(0.7, 5);
+    const frontLeftWall = frontRightWall.clone();
+    const frontTopWall = new THREE.PlaneGeometry(0.6, 3.8);
+    const innerRightWall = new THREE.PlaneGeometry(0.25, 5);
+    const innerLeftWall = new THREE.PlaneGeometry(0.25, 5);
 
-    this.innerRightWall = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 5), this.wallsMaterial);
-    this.innerRightWall.position.set(1, 2.5, -0.025);
-    this.innerRightWall.rotation.set(0, -Math.PI * 0.5, 0);
+    const ground = new THREE.PlaneGeometry(2.1, this.buildingDepth);
+    const ceiling = ground.clone();
+    // this.ceiling.position.y = 5;
+    // this.ceiling.position.z -= this.sizes.entranceDepth - 1.3;
 
-    this.innerLeftWall = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 5), this.wallsMaterial);
-    this.innerLeftWall.position.set(-1, 2.5, -0.025);
-    this.innerLeftWall.rotation.set(0, Math.PI * 0.5, 0);
+    innerRightWall.rotateY(Math.PI / 2);
+    innerLeftWall.rotateY(Math.PI / 2);
 
-    this.frontWall = new THREE.Group();
-    this.frontWall.add(
-      this.frontWallRightSide,
-      this.frontWallLeftSide,
-      this.frontWallTopSide,
-      this.innerRightWall,
-      this.innerLeftWall,
-    );
+    ground.rotateX(-Math.PI / 2);
+    ceiling.rotateX(-Math.PI / 2);
 
-    // Ground
-    this.ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.1, this.buildingDepth),
-      new THREE.MeshBasicMaterial({
-        color: 0x000000,
-      }),
-    );
+    frontRightWall.translate(0.65, 2.5, 0.1);
+    frontLeftWall.translate(-0.65, 2.5, 0.1);
+    frontTopWall.translate(0, 3.1, 0.1);
+    innerRightWall.translate(1, 2.5, -0.025);
+    innerLeftWall.translate(-1, 2.5, -0.025);
 
-    // The Y axis was set to -0.01 to avoid z-conflect
-    this.ground.position.set(0, -0.01, -this.buildingDepth / 2 + this.sizes.entranceDepth - 1.2);
-    this.ground.rotation.x = -Math.PI * 0.5;
+    ground.translate(0, -0.01, -this.buildingDepth / 2 + this.sizes.entranceDepth - 1.2);
+    ceiling.translate(0, 5, -this.buildingDepth / 2 + this.sizes.entranceDepth - 2.9);
 
-    // Ceiling
-    this.ceiling = this.ground.clone();
-    this.ceiling.position.y = 5;
-    this.ceiling.position.z -= this.sizes.entranceDepth - 1.3;
-    this.ceiling.scale.setScalar(-1);
+    const finalGeometry = mergeGeometries([
+      frontRightWall,
+      frontLeftWall,
+      frontTopWall,
+      innerRightWall,
+      innerLeftWall,
+      ground,
+      ceiling,
+    ]);
 
-    this.instance = new THREE.Group();
-    this.instance.add(this.frontWall, this.ground, this.ceiling);
+    this.instance = new THREE.Mesh(finalGeometry, this.wallsMaterial);
     this.scene.add(this.instance);
+
+    // // Ceiling
+    // this.ceiling = this.ground.clone();
+    // this.ceiling.position.y = 5;
+    // this.ceiling.position.z -= this.sizes.entranceDepth - 1.3;
+    // this.ceiling.scale.setScalar(-1);
+
+    // this.instance = new THREE.Group();
+    // this.instance.add(this.frontWall, this.ground, this.ceiling);
+    // this.scene.add(this.instance);
 
     /**
      * Note: Door walls were created in the Doors.js
@@ -89,12 +93,12 @@ export default class Home {
 
     // Setting the materials to transparent
     this.universalParams.transparent = true;
-    this.ground.material.transparent = this.universalParams.transparent;
+    // this.ground.material.transparent = this.universalParams.transparent;
     this.wallsMaterial.transparent = this.universalParams.transparent;
 
     const updateOpacity = () => {
       this.wallsMaterial.opacity = this.universalParams.opacity;
-      this.ground.material.opacity = this.universalParams.opacity;
+      // this.ground.material.opacity = this.universalParams.opacity;
     };
     updateOpacity();
 
