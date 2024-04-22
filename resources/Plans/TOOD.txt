@@ -11,7 +11,8 @@ Important note in the mean while:-
  [x] Totally stop the user from scrolling back!
  [-] Make the doors open on click not right click or double clicks!
  
- // This is going to change many things. The last time we were safe is at commit b9706fddc849d3f3c22e0087e5e3ca34ca156c37
+ // Up till now, all changes were amazing, the floor, ceiling, walls! Now, I will re-construct the doors and work for every other element alone.
+ // The last safe commit is at 8dcc59cdd71ad58a75d6760e84df5965be7cef4f
  [--] Limit the number of drawcalls to the GPU using Spector
  [-]  Limit the number of raycast tests, probably they will go down if the draw calls are little
  
