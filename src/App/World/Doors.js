@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import gsap, { Power2 } from 'gsap';
 import App from '../App';
 
@@ -88,7 +89,6 @@ export default class Doors {
     const toppingsOffset = new THREE.Vector3(0, 3.075, 0);
     const inbetweensMatrix = new THREE.Matrix4();
     const toppingsMatrix = new THREE.Matrix4();
-    // TODO: This is not rotated perfectly, fix it since it is creating artifacts!!!
     const orientation = new THREE.Quaternion(0, 0.7071067811865475);
     const scale = new THREE.Vector3(1, 1, 1);
 
@@ -131,31 +131,6 @@ export default class Doors {
     }
 
     this.scene.add(this.inbetweens, this.toppings);
-
-    // if (this.index > 0 && !isRight) {
-    //   this.addMesh = (index) => {
-    //     this.inbetweens = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 5), this.wallsMaterial);
-    //     this.toppings = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 3.85), this.wallsMaterial);
-
-    //     this.inbetweens.rotation.y = -Math.PI * 0.5;
-    //     this.inbetweens.position.set(1, 2.5, -index);
-
-    //     this.toppings.rotation.y = -Math.PI * 0.5;
-    //     this.toppings.position.set(1, 3.075, -index + 0.5);
-
-    //     this.sideWall.add(this.inbetweens, this.toppings);
-    //   };
-    //   this.addMesh(this.index);
-
-    //   if (this.finalResult === i) {
-    //     this.addMesh(this.index + 1);
-    //   }
-    // }
-
-    // this.leftSideWalls = this.sideWall.clone();
-    // this.leftSideWalls.position.set(-2, 0, 0);
-
-    // this.scene.add(this.sideWall, this.leftSideWalls);
   }
 
   setRoomDoors() {
@@ -165,11 +140,9 @@ export default class Doors {
 
     for (let i = 0; i < this.doorsCount; i += 1) {
       const roomDoors = this.door.clone();
+      roomDoors.rotation.y = Math.PI * 0.5;
       roomDoors.children[0].userData.doorNumber = i;
       roomDoors.userData.doorNumber = i;
-      // console.log(roomDoors);
-
-      roomDoors.rotation.y = Math.PI * 0.5;
 
       // Making the doors face each other
       if (this.rightRoom) {
@@ -299,33 +272,25 @@ export default class Doors {
 
   // Blocking other doors once one is clicked
   setBlocker() {
+    const blockerWidth = 1.05;
+
     const geometryA = new THREE.PlaneGeometry(5, 1.5);
     const geometryB = new THREE.PlaneGeometry(5, 1.5);
-    const meshA = new THREE.Mesh(geometryA, this.wallsMaterial);
-    const meshB = new THREE.Mesh(geometryB, this.wallsMaterial);
+    const geometryC = new THREE.PlaneGeometry(5, 1.5);
+    const geometryD = new THREE.PlaneGeometry(5, 1.5);
 
-    meshA.position.set(2.9, 0.5, 0);
-    meshB.position.set(-2.9, 0.5, 0);
+    geometryA.translate(2.9, 0.5, blockerWidth);
+    geometryB.translate(-2.9, 0.5, blockerWidth);
+    geometryC.translate(2.9, 0.5, -blockerWidth);
+    geometryD.translate(-2.9, 0.5, -blockerWidth);
 
-    const blockerWidth = 2.1;
+    const geometries = [geometryA, geometryB, geometryC, geometryD];
 
-    const front = new THREE.Group();
-    const back = new THREE.Group();
-    this.blocker = new THREE.Group();
+    const mergedGeos = mergeGeometries(geometries);
+    mergedGeos.rotateY(Math.PI / 2);
 
-    front.add(meshA);
-    front.add(meshB);
-
-    back.add(meshA.clone());
-    back.add(meshB.clone());
-
-    back.position.set(0, 0, -blockerWidth);
-
-    this.blocker.add(front);
-    this.blocker.add(back);
-
-    this.blocker.rotation.y = Math.PI / 2;
-    this.blocker.position.set(blockerWidth / 2, -10, 0);
+    this.blocker = new THREE.Mesh(mergedGeos, this.wallsMaterial);
+    this.blocker.position.y = -10;
 
     this.scene.add(this.blocker);
   }
