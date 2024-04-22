@@ -1,3 +1,4 @@
 dist
 node_modules
-resources
+/resources/offline/
+/resources/Blender/*.blend1

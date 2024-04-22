@@ -1,0 +1,46 @@
+Important note in the mean while:-
+ [x] Fix the loop animation, got Bugged Up! // Done, Everything is clear now
+ // Some bugs may appear later in life for this edit :(
+ [x] You have to either move the camera one step or change the max camera rotaion angle so that the first two doors ain't appear at start, better you fix the camera for mobile users (different than big screen users)
+ [x] Search for a way to let the mouse disappear once the user clicks to drag around freely, like fps games or limitless sliders in Blender // Works, but I will need to work on a custom cursor first
+ [x] If the test camera is opened, the raycaster should stop!
+ [x] Move the doors a bit to the back so that thier front face is aligned with the door
+ [x] Create a blocker for the other doors not to cast lights later.
+ [x] The fake doors created a bug once the user clicks on a door, fix it. Make them animate.
+ [x] Move the camera at once to the entrance door once the user enters a room to make them go back to the start after visiting a room
+ [x] Totally stop the user from scrolling back!
+ [-] Make the doors open on click not right click or double clicks!
+ 
+ // This is going to change many things. The last time we were safe is at commit b9706fddc849d3f3c22e0087e5e3ca34ca156c37
+ [--] Limit the number of drawcalls to the GPU using Spector
+ [-]  Limit the number of raycast tests, probably they will go down if the draw calls are little
+ 
+Personal Portfolio:
+ [x] Fix the bugs and make sure everything is working just as expected: including the GUI panel
+ [x] Start working on the raycaster and manage to get the door clicked opened
+ [x] Work on the camera animations so that it enters the room
+ [x] Change the camera controls options once the user inters a room
+ [-] Make the user able to click on the entrance door to start the experience
+ [-] Allow the user to go back to hall to view other projects
+ // Note: you have to set the project information from a db.json file that can be fully dynamic on change!
+ [-] Set some pirmitive project showcase elements and animate them well
+ [-] Set the colors, styles, lights, shadows, postprocessing, fixes, textures, images, fonts, layout, cursor, etc
+ [-] Make sure the project is at it's full glory! Fix any unwanted bugs and make everything works well
+ [-] Work on the loading scene, music, sound FX, SEO, and every other needed element
+
+BUGS!!!
+ [-] Once you enter a room, if the space button is pressed, the user can scroll front and back, right in the loop!!!
+ [-] Left clicking in between animations activates TRUCKING!!!
+ [-] Touch haven't been tested. For sure, there will be many functionall problems
+
+Note needed now:-
+every door is between two doors that are exactly as odd or as even. That is,
+to the door number 3 left is 1 and right is 5. To the door number 6, left is 8 and right is 4
+
+Right after this commit, fix the draw call issues!!! Make them as light as possible
+
+In case the empety doors are showing unwanted backgrounds, the best idea would be to create a blocking cube that
+has hole in the center shaped like the doors. Once a door is clicked, it moves to that same z position and rases
+from the ground up blooking every other empety door.
+_______________/\_/\_/\_/\_/\_/\_/\_________________
+This idea needs to be created now! // done right!
