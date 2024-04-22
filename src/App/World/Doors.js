@@ -89,11 +89,11 @@ export default class Doors {
     const inbetweensMatrix = new THREE.Matrix4();
     const toppingsMatrix = new THREE.Matrix4();
     // TODO: This is not rotated perfectly, fix it since it is creating artifacts!!!
-    const orientation = new THREE.Quaternion(0, 0.7);
+    const orientation = new THREE.Quaternion(0, 0.7071067811865475);
     const scale = new THREE.Vector3(1, 1, 1);
 
-    const inbetweensGeometry = new THREE.PlaneGeometry(0.3, 5);
-    const toppingsGeometry = new THREE.PlaneGeometry(0.7, 3.85);
+    const inbetweensGeometry = new THREE.PlaneGeometry(0.208, 5);
+    const toppingsGeometry = new THREE.PlaneGeometry(0.5, 3.85);
 
     this.inbetweens = new THREE.InstancedMesh(
       inbetweensGeometry,
